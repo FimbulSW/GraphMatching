@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphMatchingThesis", "GraphMatchingThesis\GraphMatchingThesis.vcxproj", "{25B80A70-5166-4F98-9F66-B233EA7C70FA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "googleTest", "googleTest\googleTest.vcxproj", "{D98FFDF7-5491-4259-80B8-00DB97B83058}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTestsVertice", "UnitTestsVertice\UnitTestsVertice.vcxproj", "{8992816D-DDD4-457B-BD10-ED90E825F7FD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphMatchingLib", "GraphMatchingLib\GraphMatchingLib.vcxproj", "{9395E14A-3740-4EE7-BF77-EF04385778B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{E2A74E66-CC18-4644-9945-28A659BD903E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25B80A70-5166-4F98-9F66-B233EA7C70FA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{25B80A70-5166-4F98-9F66-B233EA7C70FA}.Debug|Win32.Build.0 = Debug|Win32
+		{25B80A70-5166-4F98-9F66-B233EA7C70FA}.Release|Win32.ActiveCfg = Release|Win32
+		{25B80A70-5166-4F98-9F66-B233EA7C70FA}.Release|Win32.Build.0 = Release|Win32
+		{D98FFDF7-5491-4259-80B8-00DB97B83058}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D98FFDF7-5491-4259-80B8-00DB97B83058}.Debug|Win32.Build.0 = Debug|Win32
+		{D98FFDF7-5491-4259-80B8-00DB97B83058}.Release|Win32.ActiveCfg = Release|Win32
+		{D98FFDF7-5491-4259-80B8-00DB97B83058}.Release|Win32.Build.0 = Release|Win32
+		{8992816D-DDD4-457B-BD10-ED90E825F7FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8992816D-DDD4-457B-BD10-ED90E825F7FD}.Debug|Win32.Build.0 = Debug|Win32
+		{8992816D-DDD4-457B-BD10-ED90E825F7FD}.Release|Win32.ActiveCfg = Release|Win32
+		{8992816D-DDD4-457B-BD10-ED90E825F7FD}.Release|Win32.Build.0 = Release|Win32
+		{9395E14A-3740-4EE7-BF77-EF04385778B3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9395E14A-3740-4EE7-BF77-EF04385778B3}.Debug|Win32.Build.0 = Debug|Win32
+		{9395E14A-3740-4EE7-BF77-EF04385778B3}.Release|Win32.ActiveCfg = Release|Win32
+		{9395E14A-3740-4EE7-BF77-EF04385778B3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8992816D-DDD4-457B-BD10-ED90E825F7FD} = {E2A74E66-CC18-4644-9945-28A659BD903E}
+	EndGlobalSection
+EndGlobal
