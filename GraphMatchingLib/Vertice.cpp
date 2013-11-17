@@ -10,17 +10,17 @@ Vertice::~Vertice(void)
 {
 }
 
-const std::string& Vertice::GetEtiqueta()
+const std::string& Vertice::GetEtiqueta() const
 {
 	return _etiqueta;
 }
 
-int Vertice::GetEnumeracion()
+int Vertice::GetEnumeracion() const
 {
 	return _enumeracion;
 }
 
-int Vertice::GetGrado()
+int Vertice::GetGrado() const
 {
 	return _grado;
 }
@@ -32,11 +32,13 @@ void Vertice::SetGrado(int grado)
 
 std::ostream& operator <<(std::ostream& salida, const Vertice& v)
 {
+	//El formato de salida que se le dará es del tipo:
+	//Etiqueta\tEnumeración\tGrado
 	salida<<v._etiqueta<<"\t"<<v._enumeracion<<"\t"<<v._grado;
 	return salida;
 }
 
-bool Vertice::operator <(const Vertice& v)
+bool Vertice::operator <(const Vertice& v) const
 {
 	return _etiqueta < v._etiqueta;
 }
