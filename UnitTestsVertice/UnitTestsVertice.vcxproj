@@ -14,6 +14,7 @@
     <ProjectGuid>{8992816D-DDD4-457B-BD10-ED90E825F7FD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>UnitTestsVertice</RootNamespace>
+    <ProjectName>UnitTestsGraphMatching</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -80,6 +81,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="UnitTestsArco.cpp" />
     <ClCompile Include="UnitTestsVertice.cpp" />
   </ItemGroup>
   <ItemGroup>

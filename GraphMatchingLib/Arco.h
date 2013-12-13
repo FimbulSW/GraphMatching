@@ -47,8 +47,14 @@ public:
 	//Nos regresa la frecuencia del arco.
 	int GetFrecuencia() const;
 
+	//Asignamos la frecuencia del Arco
+	void SetFrecuencia(int);
+
 	//Nos regresa el LVEV.
 	const std::string& GetLVEV() const;
+
+	//Calcula el grado del arco en base a su origen y destino.
+	void CalcularGrado();
 private:
 	std::shared_ptr<Vertice> _origen, _destino;
 	int _gradoAdyacencia;

@@ -10,6 +10,9 @@ Arco::Arco(const std::shared_ptr<Vertice>& v1, const std::shared_ptr<Vertice>& v
 	_destino = comparacion ? v2 : v1;
 
 	_vev = _origen->GetEtiqueta() + _etiqueta + _destino->GetEtiqueta();
+
+	CalcularGrado();
+
 }
 
 
@@ -37,8 +40,7 @@ const std::shared_ptr<Vertice>& Arco::GetDestino()
 
 int Arco::GetGrado() const
 {
-	//TODO: aplicar un algoritmo para determinar la adyacencia del arco.
-	return 0;
+	return _gradoAdyacencia;
 }
 
 int Arco::GetFrecuencia() const
@@ -49,6 +51,18 @@ int Arco::GetFrecuencia() const
 const std::string& Arco::GetLVEV() const
 {
 	return _vev;
+}
+
+void Arco::CalcularGrado()
+{
+	_gradoAdyacencia = _origen->GetEnumeracion() == _destino->GetEnumeracion() ? 
+						_origen->GetGrado() - 1 :
+						_origen->GetGrado() + _destino->GetGrado() - 2;
+}
+
+void Arco::SetFrecuencia(int f)
+{
+	_frecuencia = f;
 }
 
 bool Arco::operator<(const Arco& otroArco) const 
