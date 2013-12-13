@@ -3,7 +3,7 @@
 
 
 Arco::Arco(const std::shared_ptr<Vertice>& v1, const std::shared_ptr<Vertice>& v2, const std::string& etiqueta)
-	: _origen(nullptr), _destino(nullptr), _etiqueta(etiqueta)
+	: _origen(nullptr), _destino(nullptr), _etiqueta(etiqueta), _gradoAdyacencia(0), _frecuencia(0)
 {
 	bool comparacion = *v1 < *v2;
 	_origen = comparacion ? v1 : v2;
@@ -41,6 +41,16 @@ int Arco::GetGrado() const
 	return 0;
 }
 
+int Arco::GetFrecuencia() const
+{
+	return _frecuencia;
+}
+
+const std::string& Arco::GetLVEV() const
+{
+	return _vev;
+}
+
 bool Arco::operator<(const Arco& otroArco) const 
 {
 	//TODO: Comparar los arcos en base a los siguientes puntos:
@@ -50,8 +60,22 @@ bool Arco::operator<(const Arco& otroArco) const
 	//4) Enumración de vértices.
 
 	//Primero comparamos la adyacencia
-	//Si la adyacencia del otro arco es menor que la nuestra entonces somos menores.
-	
-	if(otroArco.GetGrado() < GetGrado()) return true;
+	//Si nuestra adyacencia es menor a la del otro arco, entonces somos menores.
+	if(this->GetGrado() < otroArco.GetGrado()) return true;
+
+	//Si nuestra frecuencia es mayor a la del otro arco, entonces somos menores.
+	if(this->GetFrecuencia() > otroArco.GetFrecuencia()) return true;
+
+	//Si nuestra etiqueta es menor a la del otro arco, entonces somos menores.
+	if(this->GetLVEV() < otroArco.GetLVEV()) return true;
+
+	//Si la enumeracion de nuestro vértice origen es menor que la enumeración que el vértice
+	//origen del otro arco, entonces somos menores.
+	if(this->_origen->GetEnumeracion() < otroArco._origen->GetEnumeracion()) return true;
+
+	//Si no entonces verificamos con los respectivos vértices destino.
+	if(this->_destino->GetEnumeracion() < otroArco._destino->GetEnumeracion()) return true;
+
+	//Si no funciona ninguna de las anteriores entonces somos mayores o iguales.
 	return false;
 }

@@ -43,9 +43,16 @@ public:
 
 	//Nos regresa el grado de adyacencia del arco.
 	int GetGrado() const;
+
+	//Nos regresa la frecuencia del arco.
+	int GetFrecuencia() const;
+
+	//Nos regresa el LVEV.
+	const std::string& GetLVEV() const;
 private:
 	std::shared_ptr<Vertice> _origen, _destino;
 	int _gradoAdyacencia;
+	int _frecuencia;
 	std::string _etiqueta, _vev;
 	EstadoArco _estado;
 };
