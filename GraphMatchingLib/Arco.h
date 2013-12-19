@@ -52,7 +52,7 @@ public:
 	void SetFrecuencia(int);
 
 	//Nos regresa el LVEV.
-	const std::string& GetLVEV() const;
+	const std::string& GetLVEVString() const;
 
 	//Calcula el grado del arco en base a su origen y destino.
 	void CalcularGrado();

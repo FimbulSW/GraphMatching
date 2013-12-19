@@ -17,7 +17,6 @@ Arco::Arco(const std::shared_ptr<Vertice>& v1, const std::shared_ptr<Vertice>& v
 
 }
 
-
 Arco::~Arco(void)
 {
 }
@@ -50,7 +49,7 @@ int Arco::GetFrecuencia() const
 	return _frecuencia;
 }
 
-const std::string& Arco::GetLVEV() const
+const std::string& Arco::GetLVEVString() const
 {
 	return _vev;
 }
@@ -83,7 +82,7 @@ bool Arco::operator<(const Arco& otroArco) const
 	if(this->GetFrecuencia() > otroArco.GetFrecuencia()) return true;
 
 	//Si nuestra etiqueta es menor a la del otro arco, entonces somos menores.
-	if(this->GetLVEV() < otroArco.GetLVEV()) return true;
+	if(this->GetLVEVString() < otroArco.GetLVEVString()) return true;
 
 	//Si la enumeracion de nuestro vértice origen es menor que la enumeración que el vértice
 	//origen del otro arco, entonces somos menores.

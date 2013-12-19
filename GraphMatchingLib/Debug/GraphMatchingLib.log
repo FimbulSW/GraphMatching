@@ -1,2 +1,22 @@
-﻿  LVEV.cpp
-c:\github\graphmatching\graphmatchinglib\lvev.cpp(15): error C2614: 'LVEV' : illegal member initialization: 'LVEV' is not a base or member
+﻿Compilación iniciada a las 19/12/2013 04:31:42 p. m..
+     1>Proyecto "C:\GitHub\GraphMatching\GraphMatchingLib\GraphMatchingLib.vcxproj" en el nodo 3 (Rebuild destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Arco.cpp DespachadorEtiquetas.cpp Etiqueta.cpp LVEV.cpp Vertice.cpp
+         Vertice.cpp
+         LVEV.cpp
+         Etiqueta.cpp
+         DespachadorEtiquetas.cpp
+         Arco.cpp
+         Generando código...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\GitHub\GraphMatching\Debug\GraphMatchingLib.lib" /NOLOGO Debug\Arco.obj
+         Debug\DespachadorEtiquetas.obj
+         Debug\Etiqueta.obj
+         Debug\LVEV.obj
+         Debug\Vertice.obj
+         GraphMatchingLib.vcxproj -> C:\GitHub\GraphMatching\Debug\GraphMatchingLib.lib
+     1>Compilación del proyecto terminada "C:\GitHub\GraphMatching\GraphMatchingLib\GraphMatchingLib.vcxproj" (Rebuild destinos).
+
+Compilación correcta.
+
+Tiempo transcurrido 00:00:03.36

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClInclude Include="Arco.h" />
     <ClInclude Include="DespachadorEtiquetas.h" />
+    <ClInclude Include="DespachadorLVEV.h" />
     <ClInclude Include="Etiqueta.h" />
     <ClInclude Include="LVEV.h" />
     <ClInclude Include="Vertice.h" />
@@ -83,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="Arco.cpp" />
     <ClCompile Include="DespachadorEtiquetas.cpp" />
+    <ClCompile Include="DespachadorLVEV.cpp" />
     <ClCompile Include="Etiqueta.cpp" />
     <ClCompile Include="LVEV.cpp" />
     <ClCompile Include="Vertice.cpp" />

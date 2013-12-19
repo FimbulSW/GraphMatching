@@ -16,7 +16,7 @@ TEST(testArco, testLVEV)
 	shared_ptr<Vertice> destino = make_shared<Vertice>("C", 2);
 	Arco arco(origen, destino, "b");
 
-	EXPECT_EQ("AbC", arco.GetLVEV());
+	EXPECT_EQ("AbC", arco.GetLVEVString());
 }
 
 TEST(testArco, testLVEVBucle)
@@ -30,7 +30,7 @@ TEST(testArco, testLVEVBucle)
 
 	Arco arco(origen, origen, "b");
 
-	EXPECT_EQ("AbA", arco.GetLVEV());
+	EXPECT_EQ("AbA", arco.GetLVEVString());
 }
 
 TEST(testArco, testOrdenLexicografico)
@@ -43,7 +43,7 @@ TEST(testArco, testOrdenLexicografico)
 
 	EXPECT_EQ(origen->GetEnumeracion(), arco.GetOrigen()->GetEnumeracion());
 	EXPECT_EQ(destino->GetEnumeracion(), arco.GetDestino()->GetEnumeracion());
-	EXPECT_EQ("AbC", arco.GetLVEV())<<" se obtuvo: "<<arco.GetLVEV();
+	EXPECT_EQ("AbC", arco.GetLVEVString())<<" se obtuvo: "<<arco.GetLVEVString();
 }
 
 TEST(testArco, testCalculaAdyacenciaPorConstructor)

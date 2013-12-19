@@ -1,4 +1,16 @@
-﻿  gtest_main.cc
-  gtest-all.cc
-  Generating Code...
-  googleTest.vcxproj -> C:\GitHub\GraphMatching\Debug\googleTest.lib
+﻿Compilación iniciada a las 19/12/2013 04:31:42 p. m..
+     1>Proyecto "C:\GitHub\GraphMatching\googleTest\googleTest.vcxproj" en el nodo 2 (Rebuild destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt /D_VARIADIC_MAX=10 "C:\gtest-1.6.0\src\gtest-all.cc" "C:\gtest-1.6.0\src\gtest_main.cc"
+         gtest_main.cc
+         gtest-all.cc
+         Generando código...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\GitHub\GraphMatching\Debug\googleTest.lib" /NOLOGO "Debug\gtest-all.obj"
+         Debug\gtest_main.obj
+         googleTest.vcxproj -> C:\GitHub\GraphMatching\Debug\googleTest.lib
+     1>Compilación del proyecto terminada "C:\GitHub\GraphMatching\googleTest\googleTest.vcxproj" (Rebuild destinos).
+
+Compilación correcta.
+
+Tiempo transcurrido 00:00:03.43
