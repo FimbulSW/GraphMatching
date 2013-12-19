@@ -1,15 +1,17 @@
 #include "Arco.h"
 #include "Vertice.h"
+#include "Etiqueta.h"
+#include "DespachadorEtiquetas.h"
 
 
 Arco::Arco(const std::shared_ptr<Vertice>& v1, const std::shared_ptr<Vertice>& v2, const std::string& etiqueta)
-	: _origen(nullptr), _destino(nullptr), _etiqueta(etiqueta), _gradoAdyacencia(0), _frecuencia(0)
+	: _origen(nullptr), _destino(nullptr), _etiqueta(DespachadorEtiquetas::GetInstancia().GetEtiqueta(etiqueta)), _gradoAdyacencia(0), _frecuencia(0)
 {
 	bool comparacion = *v1 < *v2;
 	_origen = comparacion ? v1 : v2;
 	_destino = comparacion ? v2 : v1;
 
-	_vev = _origen->GetEtiqueta() + _etiqueta + _destino->GetEtiqueta();
+	_vev = _origen->GetEtiqueta() + _etiqueta->_etiqueta + _destino->GetEtiqueta();
 
 	CalcularGrado();
 

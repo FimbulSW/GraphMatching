@@ -2,6 +2,9 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
+
+class Etiqueta;
 
 //Clase que determina el comportamiento de un vértice.
 //Es el componente básico del grafo.
@@ -29,8 +32,7 @@ public:
 	friend std::ostream& operator<<(std::ostream&, const Vertice&);
 
 private:
-	std::string _etiqueta;
+	std::shared_ptr<Etiqueta> _etiqueta;
 	int _enumeracion;
 	int _grado;
 };
-

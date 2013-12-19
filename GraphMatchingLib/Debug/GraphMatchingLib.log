@@ -1,4 +1,2 @@
-﻿  Vertice.cpp
-  Arco.cpp
-  Generating Code...
-  GraphMatchingLib.vcxproj -> C:\GitHub\GraphMatching\Debug\GraphMatchingLib.lib
+﻿  LVEV.cpp
+c:\github\graphmatching\graphmatchinglib\lvev.cpp(15): error C2614: 'LVEV' : illegal member initialization: 'LVEV' is not a base or member

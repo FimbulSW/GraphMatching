@@ -5,6 +5,7 @@
 #include <memory>
 
 class Vertice;
+class Etiqueta;
 
 //Enumera los tipos de estados en los que un arco puede encontrarse.
 //Ya sea como 'Visitado', 'Listo', o 'En espera'
@@ -59,6 +60,7 @@ private:
 	std::shared_ptr<Vertice> _origen, _destino;
 	int _gradoAdyacencia;
 	int _frecuencia;
-	std::string _etiqueta, _vev;
+	std::shared_ptr<Etiqueta> _etiqueta;
+	std::string _vev;
 	EstadoArco _estado;
 };

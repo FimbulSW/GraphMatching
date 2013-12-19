@@ -75,10 +75,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arco.h" />
+    <ClInclude Include="DespachadorEtiquetas.h" />
+    <ClInclude Include="Etiqueta.h" />
+    <ClInclude Include="LVEV.h" />
     <ClInclude Include="Vertice.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arco.cpp" />
+    <ClCompile Include="DespachadorEtiquetas.cpp" />
+    <ClCompile Include="Etiqueta.cpp" />
+    <ClCompile Include="LVEV.cpp" />
     <ClCompile Include="Vertice.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

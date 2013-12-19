@@ -1,7 +1,9 @@
 #include "Vertice.h"
+#include "Etiqueta.h"
+#include "DespachadorEtiquetas.h"
 
 Vertice::Vertice(const std::string& etiqueta, int enumeracion) 
-	: _etiqueta(etiqueta), _enumeracion(enumeracion), _grado(0)
+	: _etiqueta(DespachadorEtiquetas::GetInstancia().GetEtiqueta(etiqueta)), _enumeracion(enumeracion), _grado(0)
 {
 }
 
@@ -12,7 +14,7 @@ Vertice::~Vertice(void)
 
 const std::string& Vertice::GetEtiqueta() const
 {
-	return _etiqueta;
+	return _etiqueta->_etiqueta;
 }
 
 int Vertice::GetEnumeracion() const
@@ -40,5 +42,5 @@ std::ostream& operator <<(std::ostream& salida, const Vertice& v)
 
 bool Vertice::operator <(const Vertice& v) const
 {
-	return _etiqueta < v._etiqueta;
+	return _etiqueta->_etiqueta < v._etiqueta->_etiqueta;
 }
