@@ -28,8 +28,12 @@ public:
 	//Sólo es utilizado para asuntos de pruebas, no usar nunca en resolución del algoritmo.
 	void Vacia();
 
-	//Nos regresa la instancia del despachador, dado que él se encagargará de que sólo puedan existir una instancia por cada LVEV diferente
+	//Nos regresa la instancia del despachador con ID 0, dado que él se encagargará de que sólo puedan existir una instancia por cada LVEV diferente
 	//lo declaramos como static.
 	static DespachadorLVEV& GetInstancia();
+
+	//Nos regresa la instancia del despachador con el ID especificado, dado que él se encargará de que sólo puedan existir una instancia por cada LVEV diferente
+	//lo declaramos como static.
+	static DespachadorLVEV& GetInstancia(int);
 };
 

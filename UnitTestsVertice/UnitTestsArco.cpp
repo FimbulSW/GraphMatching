@@ -2,7 +2,10 @@
 #include "Arco.h"
 #include "Vertice.h"
 #include "DespachadorLVEV.h"
+
 #include <memory>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -146,9 +149,11 @@ TEST(testArco, testOrdenPorAdyacencia)
 	//Verificamos que el arcoMayor sea precísamente mayor que el arcoMenor.
 
 	bool verifica = arcoMenor < arcoMayor;
+	bool verificaMatematicamente = !(arcoMayor < arcoMenor);
 
 	//Tiene que retornar verdad.
 	EXPECT_EQ(true, verifica);
+	EXPECT_EQ(true, verificaMatematicamente);
 }
 
 TEST(testArco, testOrdenPorFrecuencia)
@@ -305,4 +310,182 @@ TEST(testArco, testOrdenPorVerticesDestino)
 
 	//Tiene que retornar false.
 	EXPECT_EQ(false, verifica);
+}
+
+TEST(testArco, testColeccionOrdenadaMismasFrecuencias)
+{
+	DespachadorLVEV::GetInstancia().Vacia();
+	//Creamos una colección de arcos, para tratar de ordenarlos.
+	vector<shared_ptr<Arco> > coleccion;
+	//Creamos un arreglo de vértices
+	shared_ptr<Vertice> vertices[10];
+	//Predefinimos las etiqutas que queremos usar para la prueba.
+	string etiquetasV[10] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+	string etiquetasA[5] = { "a", "b", "c", "d", "e" };
+	//Al ser un caso con pocos elementos podemos calcular cuales son los resultados esperados después del ordenamiento.
+	string resultadosEsperados[] = { "BbC", "CcE", "DdG", "EeI", "AaA" };
+
+	//Creamos todos los vértices.
+	for (int i = 0; i < 10; i++)
+	{
+		
+		vertices[i] = make_shared<Vertice>(etiquetasV[i], i + 1);
+	}
+
+	//Creamos los arcos y los metemos en la colección.
+	for (int i = 0; i < 5; i++)
+	{
+		coleccion.push_back(make_shared<Arco>(vertices[i], vertices[i * 2], etiquetasA[i]));
+	}
+
+	//Ordenamos la colección usando sort de algorithm
+	sort(coleccion.begin(), coleccion.end(), [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
+	{
+		return *a1 < *a2;
+	});
+
+	//Recorremos la lista para tratar de obtener los resultados esperados.
+	for (int i = 0; i < 5; i++)
+	{
+		EXPECT_EQ(resultadosEsperados[i], coleccion[i]->GetLVEVString());
+	}
+}
+
+TEST(testArco, testColeccionOrdenadaDistintasFrecuencias)
+{
+	DespachadorLVEV::GetInstancia().Vacia();
+	//Creamos una colección de arcos, para tratar de ordenarlos.
+	vector<shared_ptr<Arco> > coleccion;
+	//Creamos un arreglo de vértices
+	shared_ptr<Vertice> vertices[10];
+	//Predefinimos las etiqutas que queremos usar para la prueba.
+	string etiquetasV[10] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+	string etiquetasA[5] = { "a", "b", "c", "d", "e" };
+	//Al ser un caso con pocos elementos podemos calcular cuales son los resultados esperados después del ordenamiento.
+	string resultadosEsperados[] = { "EeI", "CcE", "BbC", "DdG", "AaA" };
+
+	//Creamos todos los vértices.
+	for (int i = 0; i < 10; i++)
+	{
+
+		vertices[i] = make_shared<Vertice>(etiquetasV[i], i + 1);
+	}
+
+	//Creamos los arcos y los metemos en la colección.
+	for (int i = 0; i < 5; i++)
+	{
+		coleccion.push_back(make_shared<Arco>(vertices[i], vertices[i * 2], etiquetasA[i]));
+	}
+
+	//Para el caso de prueba propuesto se ocuparán las siguientes frecuencias:
+	// AaA --- 3
+	// BbC --- 1
+	// CcE --- 2
+	// DdG --- 1
+	// EeI --- 3
+
+	//Aumentamos la frecuencia del LVEV de AaA
+	DespachadorLVEV::GetInstancia().GetLVEV("A", "a", "A");
+	DespachadorLVEV::GetInstancia().GetLVEV("A", "a", "A");
+	//Con esto debe tener frecuencia 3
+
+	//Aumentamos la frecuencia del LVEV de CcE
+	DespachadorLVEV::GetInstancia().GetLVEV("C", "c", "E");
+	//Con esto debe tener frecuencia 2
+
+	//Aumentamos la frecuencia del LVEV de EeI
+	DespachadorLVEV::GetInstancia().GetLVEV("E", "e", "I");
+	DespachadorLVEV::GetInstancia().GetLVEV("E", "e", "I");
+	//Con esto debe tener frecuencia 3
+
+	//Ordenamos la colección usando sort de algorithm
+	sort(coleccion.begin(), coleccion.end(), [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
+	{
+		return *a1 < *a2;
+	});
+
+	//Recorremos la lista para tratar de obtener los resultados esperados.
+	for (int i = 0; i < 5; i++)
+	{
+		EXPECT_EQ(resultadosEsperados[i], coleccion[i]->GetLVEVString());
+	}
+}
+
+TEST(testArco, testColeccionOrdenadaDistintosGradosAdyacencia)
+{
+	DespachadorLVEV::GetInstancia().Vacia();
+	//Creamos una colección de arcos, para tratar de ordenarlos.
+	vector<shared_ptr<Arco> > coleccion;
+	//Creamos un arreglo de vértices
+	shared_ptr<Vertice> vertices[10];
+	//Predefinimos las etiqutas que queremos usar para la prueba.
+	string etiquetasV[10] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+	string etiquetasA[5] = { "a", "b", "c", "d", "e" };
+	//Al ser un caso con pocos elementos podemos calcular cuales son los resultados esperados después del ordenamiento.
+	string resultadosEsperados[] = { "DdG", "CcE", "AaA", "EeI", "BbC" };
+
+	//Creamos todos los vértices.
+	//Para asuntos de simplicidad en la prueba se han acordado que los valores de los grados de los vértices serán los siguientes:
+	//A --- 7
+	//B --- 5
+	//C --- 4
+	//D --- 1
+	//E --- 2
+	//F --- 0
+	//G --- 3
+	//H --- 0
+	//I --- 6
+	//J --- 0
+
+	for (int i = 0; i < 10; i++)
+	{
+		vertices[i] = make_shared<Vertice>(etiquetasV[i], i + 1);
+		if (etiquetasV[i] == "A") vertices[i]->SetGrado(7);
+		else if (etiquetasV[i] == "B") vertices[i]->SetGrado(5);
+		else if (etiquetasV[i] == "C") vertices[i]->SetGrado(4);
+		else if (etiquetasV[i] == "D") vertices[i]->SetGrado(1);
+		else if (etiquetasV[i] == "E") vertices[i]->SetGrado(2);
+		else if (etiquetasV[i] == "G") vertices[i]->SetGrado(3);
+		else if (etiquetasV[i] == "I") vertices[i]->SetGrado(6);
+		else vertices[i]->SetGrado(0);
+	}
+
+	//Creamos los arcos y los metemos en la colección.
+	for (int i = 0; i < 5; i++)
+	{
+		coleccion.push_back(make_shared<Arco>(vertices[i], vertices[i * 2], etiquetasA[i]));
+	}
+
+	//Para el caso de prueba propuesto se ocuparán las siguientes frecuencias:
+	// AaA --- 3
+	// BbC --- 1
+	// CcE --- 2
+	// DdG --- 1
+	// EeI --- 3
+
+	//Aumentamos la frecuencia del LVEV de AaA
+	DespachadorLVEV::GetInstancia().GetLVEV("A", "a", "A");
+	DespachadorLVEV::GetInstancia().GetLVEV("A", "a", "A");
+	//Con esto debe tener frecuencia 3
+
+	//Aumentamos la frecuencia del LVEV de CcE
+	DespachadorLVEV::GetInstancia().GetLVEV("C", "c", "E");
+	//Con esto debe tener frecuencia 2
+
+	//Aumentamos la frecuencia del LVEV de EeI
+	DespachadorLVEV::GetInstancia().GetLVEV("E", "e", "I");
+	DespachadorLVEV::GetInstancia().GetLVEV("E", "e", "I");
+	//Con esto debe tener frecuencia 3
+
+	//Ordenamos la colección usando sort de algorithm
+	sort(coleccion.begin(), coleccion.end(), [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
+	{
+		return *a1 < *a2;
+	});
+
+	//Recorremos la lista para tratar de obtener los resultados esperados.
+	for (int i = 0; i < 5; i++)
+	{
+		EXPECT_EQ(resultadosEsperados[i], coleccion[i]->GetLVEVString());
+	}
 }

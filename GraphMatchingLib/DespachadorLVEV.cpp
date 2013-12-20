@@ -38,8 +38,20 @@ std::shared_ptr<LVEV> DespachadorLVEV::GetLVEV(const std::string& origen, const 
 
 DespachadorLVEV& DespachadorLVEV::GetInstancia()
 {
-	static DespachadorLVEV instancia;
-	return instancia;
+	return GetInstancia(0);
+}
+
+DespachadorLVEV& DespachadorLVEV::GetInstancia(int id)
+{
+	static std::map<int, std::shared_ptr<DespachadorLVEV> > _despachadores;
+	auto busqueda = _despachadores.find(id);
+
+	if (busqueda == _despachadores.end())
+	{
+		_despachadores[id] = std::shared_ptr<DespachadorLVEV>(new DespachadorLVEV());
+	}
+
+	return *_despachadores[id];
 }
 
 void DespachadorLVEV::Vacia()

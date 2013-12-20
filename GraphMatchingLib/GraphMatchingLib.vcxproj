@@ -78,6 +78,7 @@
     <ClInclude Include="DespachadorEtiquetas.h" />
     <ClInclude Include="DespachadorLVEV.h" />
     <ClInclude Include="Etiqueta.h" />
+    <ClInclude Include="Grafo.h" />
     <ClInclude Include="LVEV.h" />
     <ClInclude Include="Vertice.h" />
   </ItemGroup>
@@ -86,6 +87,7 @@
     <ClCompile Include="DespachadorEtiquetas.cpp" />
     <ClCompile Include="DespachadorLVEV.cpp" />
     <ClCompile Include="Etiqueta.cpp" />
+    <ClCompile Include="Grafo.cpp" />
     <ClCompile Include="LVEV.cpp" />
     <ClCompile Include="Vertice.cpp" />
   </ItemGroup>

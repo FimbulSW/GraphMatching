@@ -27,14 +27,14 @@ public:
 	//Constructor del arco, admite 2 apuntadores (origen, destino) y la etiqueta del mismo.
 	//El constructor por default ordenará el origen y destino en orden lexicográfico.
 	//Así como el estado se pondrá por default como ESPERA
-	Arco(const std::shared_ptr<Vertice>&, const std::shared_ptr<Vertice>&, const std::string&);
+	Arco(const std::shared_ptr<Vertice>&, const std::shared_ptr<Vertice>&, const std::string&, int = 0);
 
 	~Arco(void);
 
 	//Sobrecarga el operador '<<' para objetos de tipo ostream.
 	friend std::ostream& operator<<(std::ostream&, const Arco&);
 
-	//Sobrecarga del operador '<' para poder ordenar los arcos en base a su forma canónica.
+	//Sobrecarga del operador '<' para poder ordenar los arcos en base reglas, se especifica en el archivo de implementación. =D
 	bool operator<(const Arco&) const;
 
 	//Nos regresa una referencia al apuntador inteligente del origen.
@@ -49,7 +49,7 @@ public:
 	//Nos regresa la frecuencia del arco.
 	int GetFrecuencia() const;
 
-	//Nos regresa el LVEV.
+	//Nos regresa el LVEV en forma de cadena.
 	const std::string& GetLVEVString() const;
 
 	//Nos regresa un puntero a el LVEV
@@ -68,7 +68,5 @@ private:
 	std::shared_ptr<Etiqueta> _etiqueta;
 	std::shared_ptr<LVEV> _lvev;
 	int _gradoAdyacencia;
-	int _frecuencia;
-	std::string _vev;
 	EstadoArco _estado;
 };

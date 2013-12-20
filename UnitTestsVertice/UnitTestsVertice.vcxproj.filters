@@ -27,7 +27,10 @@
     <ClCompile Include="UnitTestsDespachadorEtiquetas.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="TestDespachadorLVEV.cpp">
+    <ClCompile Include="UnitTestsDespachadorLVEV.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTestsGrafo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
