@@ -6,6 +6,7 @@
 
 class Vertice;
 class Etiqueta;
+class LVEV;
 
 //Enumera los tipos de estados en los que un arco puede encontrarse.
 //Ya sea como 'Visitado', 'Listo', o 'En espera'
@@ -48,19 +49,26 @@ public:
 	//Nos regresa la frecuencia del arco.
 	int GetFrecuencia() const;
 
-	//Asignamos la frecuencia del Arco
-	void SetFrecuencia(int);
-
 	//Nos regresa el LVEV.
 	const std::string& GetLVEVString() const;
 
+	//Nos regresa un puntero a el LVEV
+	const std::shared_ptr<LVEV>& GetLVEV() const;
+
 	//Calcula el grado del arco en base a su origen y destino.
 	void CalcularGrado();
+
+	//Verifica si 2 arcos comparten el mismo lvev, para asuntos de identificación del patrón.
+	bool operator==(const Arco&) const;
+
+	//Cambia el estado del arco.
+	void CambiaEstado(EstadoArco);
 private:
 	std::shared_ptr<Vertice> _origen, _destino;
+	std::shared_ptr<Etiqueta> _etiqueta;
+	std::shared_ptr<LVEV> _lvev;
 	int _gradoAdyacencia;
 	int _frecuencia;
-	std::shared_ptr<Etiqueta> _etiqueta;
 	std::string _vev;
 	EstadoArco _estado;
 };

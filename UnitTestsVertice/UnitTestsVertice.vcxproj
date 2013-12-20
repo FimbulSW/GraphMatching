@@ -81,6 +81,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TestDespachadorLVEV.cpp" />
     <ClCompile Include="UnitTestsArco.cpp" />
     <ClCompile Include="UnitTestsDespachadorEtiquetas.cpp" />
     <ClCompile Include="UnitTestsVertice.cpp" />

@@ -2,19 +2,20 @@
 #include "Vertice.h"
 #include "Etiqueta.h"
 #include "DespachadorEtiquetas.h"
-
+#include "LVEV.h"
+#include "DespachadorLVEV.h"
 
 Arco::Arco(const std::shared_ptr<Vertice>& v1, const std::shared_ptr<Vertice>& v2, const std::string& etiqueta)
-	: _origen(nullptr), _destino(nullptr), _etiqueta(DespachadorEtiquetas::GetInstancia().GetEtiqueta(etiqueta)), _gradoAdyacencia(0), _frecuencia(0)
+	: _origen(nullptr), _destino(nullptr), _etiqueta(DespachadorEtiquetas::GetInstancia().GetEtiqueta(etiqueta)), _lvev(nullptr), _gradoAdyacencia(0)
 {
 	bool comparacion = *v1 < *v2;
 	_origen = comparacion ? v1 : v2;
 	_destino = comparacion ? v2 : v1;
 
 	_vev = _origen->GetEtiqueta() + _etiqueta->_etiqueta + _destino->GetEtiqueta();
+	_lvev = DespachadorLVEV::GetInstancia().GetLVEV(_origen->GetEtiqueta(), etiqueta, _destino->GetEtiqueta());
 
 	CalcularGrado();
-
 }
 
 Arco::~Arco(void)
@@ -46,12 +47,17 @@ int Arco::GetGrado() const
 
 int Arco::GetFrecuencia() const
 {
-	return _frecuencia;
+	return _lvev->GetFrecuencia();
 }
 
 const std::string& Arco::GetLVEVString() const
 {
-	return _vev;
+	return _lvev->GetLVEVString();
+}
+
+const std::shared_ptr<LVEV>& Arco::GetLVEV() const
+{
+	return _lvev;
 }
 
 void Arco::CalcularGrado()
@@ -59,11 +65,6 @@ void Arco::CalcularGrado()
 	_gradoAdyacencia = _origen->GetEnumeracion() == _destino->GetEnumeracion() ? 
 						_origen->GetGrado() - 1 :
 						_origen->GetGrado() + _destino->GetGrado() - 2;
-}
-
-void Arco::SetFrecuencia(int f)
-{
-	_frecuencia = f;
 }
 
 bool Arco::operator<(const Arco& otroArco) const 
@@ -93,4 +94,14 @@ bool Arco::operator<(const Arco& otroArco) const
 
 	//Si no funciona ninguna de las anteriores entonces somos mayores o iguales.
 	return false;
+}
+
+bool Arco::operator==(const Arco& otroArco) const
+{
+	return _lvev == otroArco._lvev;
+}
+
+void Arco::CambiaEstado(EstadoArco estado)
+{
+	_estado = estado;
 }

@@ -34,11 +34,14 @@ public:
 	LVEV(const LVEV&) = delete;
 
 	~LVEV(void);
-	//Cambia la frecuencia de nuestro LVEV
+	//Cambia la frecuencia de nuestro LVEV al número dado.
 	void SetFrecuencia(int);
 
 	//Obtenemos la frecuencia de nuestro LVEV
 	int GetFrecuencia() const;
+
+	//Incrementa nuestra frecuencia en 1
+	void IncrementaFrecuencia();
 
 	//Sobrecargamos el operador == sobre los LVEV para preguntar sobre las referencias origen, arco y destino.
 	bool operator==(const LVEV&) const;

@@ -30,6 +30,11 @@ int LVEV::GetFrecuencia() const
 	return _frecuencia;
 }
 
+void LVEV::IncrementaFrecuencia()
+{
+	++_frecuencia;
+}
+
 bool LVEV::operator==(const LVEV& otroLVEV) const
 {
 	return this->_origen == otroLVEV._origen && this->_destino == otroLVEV._destino && this->_arco == otroLVEV._arco;

@@ -1,12 +1,14 @@
 #include "gtest/gtest.h"
 #include "Arco.h"
 #include "Vertice.h"
+#include "DespachadorLVEV.h"
 #include <memory>
 
 using namespace std;
 
 TEST(testArco, testLVEV)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Se crean 2 vértices.
 	//Se crea el arco a través de esos vértices.
 
@@ -21,6 +23,7 @@ TEST(testArco, testLVEV)
 
 TEST(testArco, testLVEVBucle)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Se crea 1 vértice.
 	//Se crea el arco a través de éste vértice.
 
@@ -35,6 +38,7 @@ TEST(testArco, testLVEVBucle)
 
 TEST(testArco, testOrdenLexicografico)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Se crean vértices lexicográficamente distintos.
 	//Se agregan de manera inversa para que el constructor los acomode de manera adecuada.
 	shared_ptr<Vertice> origen = make_shared<Vertice>("A", 1);
@@ -48,6 +52,7 @@ TEST(testArco, testOrdenLexicografico)
 
 TEST(testArco, testCalculaAdyacenciaPorConstructor)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Se crean los vertices con grado 3.
 	//Se espera que el arco tenga grado 4.
 
@@ -64,6 +69,7 @@ TEST(testArco, testCalculaAdyacenciaPorConstructor)
 
 TEST(testArco, testCalculaAdyacenciaPorConstructorBucle)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Se crea un único vértice con grado 3.
 	//Se espera que el arco tenga grado 2.
 
@@ -78,6 +84,7 @@ TEST(testArco, testCalculaAdyacenciaPorConstructorBucle)
 
 TEST(testArco, testCalculaAdyacenciaPorMetodo)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Se crean 2 vértices.
 	//Se crea el arco con los respectivos vértices.
 
@@ -97,6 +104,7 @@ TEST(testArco, testCalculaAdyacenciaPorMetodo)
 
 TEST(testArco, testCalculaAdyacenciaPorMetodoBucle)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Se crea 1 sólo vértice.
 	//Se crea el arco con éste vértice.
 
@@ -115,6 +123,7 @@ TEST(testArco, testCalculaAdyacenciaPorMetodoBucle)
 
 TEST(testArco, testOrdenPorAdyacencia)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos los vértices para el arcoMenor, con un grado de adyacencia de 3 cada uno
 	//De esta forma sabemos que el arco tiene un grado de 4.
 	shared_ptr<Vertice> origenArco1 = make_shared<Vertice>("A", 1);
@@ -144,6 +153,7 @@ TEST(testArco, testOrdenPorAdyacencia)
 
 TEST(testArco, testOrdenPorFrecuencia)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos los vértices para el arcoMenor, con un grado de adyacencia de 3 cada uno
 	//De esta forma sabemos que el arco tiene un grado de 4.
 	shared_ptr<Vertice> origenArco1 = make_shared<Vertice>("A", 1);
@@ -166,11 +176,17 @@ TEST(testArco, testOrdenPorFrecuencia)
 	//El orden es descendente con respecto a la frecuencia, por lo que pondremos una frecuencia mayor al arcoMenor
 	//y viceversa.
 
-	//Diremos que aparece 5 veces el LVEV del arco menor.
-	arcoMenor.SetFrecuencia(5);
+	//Para esto crearemos 5 nuevos LVEV AbC y sólo 3 nuevos DeF
 
-	//Diremos que aparece 3 veces el LVEV del arco mayor.
-	arcoMayor.SetFrecuencia(3);
+	for (int i = 0; i < 5; i++)
+	{
+		DespachadorLVEV::GetInstancia().GetLVEV("A", "b", "C");
+	}
+	
+	for (int i = 0; i < 3; i++)
+	{
+		DespachadorLVEV::GetInstancia().GetLVEV("D", "e", "F");
+	}
 
 	//Verificamos que el arcoMayor sea precísamente mayor que el arcoMenor.
 
@@ -182,6 +198,7 @@ TEST(testArco, testOrdenPorFrecuencia)
 
 TEST(testArco, testOrdenPorLexicografia)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos los vértices para el arcoMenor, con un grado de adyacencia de 3 cada uno
 	//De esta forma sabemos que el arco tiene un grado de 4.
 	shared_ptr<Vertice> origenArco1 = make_shared<Vertice>("A", 1);
@@ -218,6 +235,7 @@ TEST(testArco, testOrdenPorLexicografia)
 
 TEST(testArco, testOrdenPorVerticesOrigen)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos los vértices para el arcoMenor, con un grado de adyacencia de 3 cada uno
 	//De esta forma sabemos que el arco tiene un grado de 4.
 	shared_ptr<Vertice> origenArco1 = make_shared<Vertice>("A", 1);
@@ -255,6 +273,7 @@ TEST(testArco, testOrdenPorVerticesOrigen)
 
 TEST(testArco, testOrdenPorVerticesDestino)
 {
+	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos los vértices para el arcoMenor, con un grado de adyacencia de 3 cada uno
 	//De esta forma sabemos que el arco tiene un grado de 4.
 	shared_ptr<Vertice> origenArco1 = make_shared<Vertice>("A", 1);

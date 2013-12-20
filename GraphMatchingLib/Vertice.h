@@ -16,7 +16,7 @@ public:
 	Vertice(const std::string&, int);
 	~Vertice(void);
 
-	//Obtenemos una referencia hacia la etiqueta
+	//Obtenemos una referencia hacia la etiqueta en cadena
 	const std::string& GetEtiqueta() const;
 	//Obtenemos su enumeración.
 	int GetEnumeracion() const;
