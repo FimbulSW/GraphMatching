@@ -18,9 +18,31 @@ void Grafo::ExploraGrafo()
 {
 	//TODO:
 	//Aplicar el algoritmo adecuado para la exploración del grafo y determinar la adyacencia de los vértices.
+
+	//Por cada vértice que se encuentra en el map
+	for (auto& parVertices : _vertices)
+	{
+		//Se asigna la referencia.
+		auto& vertice = parVertices.second;
+
+		//Comparamos en cada arco si el vértice aparece ya sea en su origen o en su destino.
+		for (auto& arco : _arcos)
+		{
+			if (arco->GetOrigen() == vertice || arco->GetDestino() == vertice)
+			{
+				vertice->SetGrado(vertice->GetGrado() + 1);
+			}
+		}
+	}
+
+	//Ya que hemos calculado el grado de los vértices, ahora calculamos el grado de los arcos.
+	for (auto& arco : _arcos)
+	{
+		arco->CalcularGrado();
+	}
 }
 
-const std::vector<std::shared_ptr<Arco> >& Grafo::GetArcos() const
+const std::deque<std::shared_ptr<Arco> >& Grafo::GetArcos() const
 {
 	return _arcos;
 }

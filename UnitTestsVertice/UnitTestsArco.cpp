@@ -4,7 +4,7 @@
 #include "DespachadorLVEV.h"
 
 #include <memory>
-#include <vector>
+#include <deque>
 #include <algorithm>
 
 using namespace std;
@@ -316,7 +316,7 @@ TEST(testArco, testColeccionOrdenadaMismasFrecuencias)
 {
 	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos una colección de arcos, para tratar de ordenarlos.
-	vector<shared_ptr<Arco> > coleccion;
+	deque<shared_ptr<Arco> > coleccion;
 	//Creamos un arreglo de vértices
 	shared_ptr<Vertice> vertices[10];
 	//Predefinimos las etiqutas que queremos usar para la prueba.
@@ -355,7 +355,7 @@ TEST(testArco, testColeccionOrdenadaDistintasFrecuencias)
 {
 	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos una colección de arcos, para tratar de ordenarlos.
-	vector<shared_ptr<Arco> > coleccion;
+	deque<shared_ptr<Arco> > coleccion;
 	//Creamos un arreglo de vértices
 	shared_ptr<Vertice> vertices[10];
 	//Predefinimos las etiqutas que queremos usar para la prueba.
@@ -415,7 +415,7 @@ TEST(testArco, testColeccionOrdenadaDistintosGradosAdyacencia)
 {
 	DespachadorLVEV::GetInstancia().Vacia();
 	//Creamos una colección de arcos, para tratar de ordenarlos.
-	vector<shared_ptr<Arco> > coleccion;
+	deque<shared_ptr<Arco> > coleccion;
 	//Creamos un arreglo de vértices
 	shared_ptr<Vertice> vertices[10];
 	//Predefinimos las etiqutas que queremos usar para la prueba.

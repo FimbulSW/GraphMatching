@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <deque>
 #include <memory>
 #include <iostream>
 #include <string>
@@ -14,7 +14,7 @@ class Grafo
 {
 private:
 	//Colección de arcos.
-	std::vector<std::shared_ptr<Arco> > _arcos;
+	std::deque<std::shared_ptr<Arco> > _arcos;
 	//Colección de vértices.
 	std::map<int, std::shared_ptr<Vertice> > _vertices;
 	//Método para determinar las adyacencias de los vértices.
@@ -34,7 +34,7 @@ public:
 	//Método para leer los datos del grafo a través de un flujo de entrada cualquiera.
 	friend std::istream& operator >>(std::istream&, Grafo&);
 	//Regresa los arcos pertenecientes al grafo.
-	const std::vector<std::shared_ptr<Arco> >& GetArcos() const;
+	const std::deque<std::shared_ptr<Arco> >& GetArcos() const;
 	//Ordena los arcos del grafo a través de las reglas de exploración de primero el mejor.
 	void CreaFormaCanonica();
 	//Devuelve el nombre del grafo.
