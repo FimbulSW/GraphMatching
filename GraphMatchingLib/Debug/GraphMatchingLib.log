@@ -1,4 +1,4 @@
-﻿Compilación iniciada a las 13/01/2014 04:55:20 p. m..
+﻿Compilación iniciada a las 16/01/2014 07:40:08 p.m..
      1>Proyecto "C:\GitHub\GraphMatching\GraphMatchingLib\GraphMatchingLib.vcxproj" en el nodo 3 (Rebuild destinos).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Arco.cpp DespachadorEtiquetas.cpp DespachadorLVEV.cpp Etiqueta.cpp Grafo.cpp LVEV.cpp Vertice.cpp
@@ -23,4 +23,4 @@
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:15.42
+Tiempo transcurrido 00:00:11.21

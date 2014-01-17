@@ -20,7 +20,7 @@ TEST(testGrafo, testLecturaGrafoSimple)
 	ss << "v 1 A" << endl;
 	ss << "v 2 C" << endl;
 	ss << "e 2 1 b" << endl;
-	
+
 	//Se llena el grafo con la información que contenga el flujo.
 	ss >> g;
 
@@ -50,7 +50,7 @@ TEST(testGrafo, testLecutraGrafoMediano)
 	ss << "v 5 E" << endl;
 	ss << "v 6 G" << endl;
 	ss << "v 7 I" << endl;
-	
+
 	ss << "e 1 1 a" << endl;
 	ss << "e 2 3 b" << endl;
 	ss << "e 3 5 c" << endl;
@@ -69,4 +69,106 @@ TEST(testGrafo, testLecutraGrafoMediano)
 		//Dichos arcos tienen que estar en el orden descrito en el arreglo 'resultado'.
 		EXPECT_EQ(resultado[i], arcos[i]->GetLVEVString());
 	}
+}
+
+//Esta prueba pretende calcular los grados de los arcos, aprovechando la comparación con referencias
+//de la implementación.
+TEST(testGrafo, testCalculaGradoArcos)
+{
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	stringstream ss;
+	//Nombre del arco
+	ss << "Grafo de prueba" << endl;
+	//Inserción de los vértices.
+	ss << "v 1 A" << endl;
+	ss << "v 2 B" << endl;
+	ss << "v 3 D" << endl;
+	ss << "v 4 C" << endl;
+	ss << "v 5 J" << endl;
+	ss << "v 6 A" << endl;
+	ss << "v 7 B" << endl;
+	//Inserción de aristas.
+	ss << "e 1 2 c" << endl;
+	ss << "e 1 3 b" << endl;
+	ss << "e 3 4 c" << endl;
+	ss << "e 3 6 b" << endl;
+	ss << "e 2 4 d" << endl;
+	ss << "e 4 7 d" << endl;
+	ss << "e 2 5 a" << endl;
+	ss << "e 5 7 a" << endl;
+	ss << "e 6 7 c" << endl;
+
+	//Llenaremos el grafo con el flujo
+	ss >> g;
+
+	//Exploraremos el grafo y en base a eso calcularemos el grado.
+	g.ExploraGrafo();
+
+	auto arcos = g.GetArcos();
+
+	int gradosEsperados[] = { 3, 3, 4, 3, 4, 4, 3, 3, 3 };
+
+	//Se supone que el grafo debería tener 9 arcos.
+	EXPECT_EQ(9, arcos.size());
+
+	for (int i = 0; i < 9; i++)
+	{
+		int gradoAdyacencia = g.GetAdyacencia(arcos[i]).size();
+		EXPECT_EQ(gradosEsperados[i], gradoAdyacencia) << " fallo!!!! en la posición " << i << endl;
+	}
+}
+
+//Esta prueba pretende verificar que la colección de arcos adyacentes unos con otros funcione de manera adecuada.
+TEST(testGrafo, testVerificaAdyacenciasArcos)
+{
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	stringstream ss;
+	//Nombre del arco
+	ss << "Grafo de prueba" << endl;
+	//Inserción de los vértices.
+	ss << "v 1 A" << endl;
+	ss << "v 2 B" << endl;
+	ss << "v 3 D" << endl;
+	ss << "v 4 C" << endl;
+	ss << "v 5 J" << endl;
+	ss << "v 6 A" << endl;
+	ss << "v 7 B" << endl;
+	//Inserción de aristas.
+	ss << "e 1 2 c" << endl;
+	ss << "e 1 3 b" << endl;
+	ss << "e 3 4 c" << endl;
+	ss << "e 3 6 b" << endl;
+	ss << "e 2 4 d" << endl;
+	ss << "e 4 7 d" << endl;
+	ss << "e 2 5 a" << endl;
+	ss << "e 5 7 a" << endl;
+	ss << "e 6 7 c" << endl;
+
+	//Llenaremos el grafo con el flujo
+	ss >> g;
+
+	//Exploraremos el grafo y en base a eso calcularemos el grado.
+	g.ExploraGrafo();
+
+	//Obtenemos los arcos del grafo.
+	auto arcos = g.GetArcos();
+	auto arcoCcD = arcos[2];
+
+	EXPECT_EQ("CcD", arcoCcD->GetLVEVString());
+	//Obtenemos todos los adyacentes al arco CcD
+	auto adyacentesCcD = g.GetAdyacencia(arcoCcD);
+	                        
+	//								AbD AbD BdC BdC
+	int posicionesDeAdyacentes[] = { 1,  3,  4,  5  };
+
+	//El arco CcD tiene 4 adyacentes, así que lo verificamos.
+	EXPECT_EQ(4, adyacentesCcD.size());
+
+	for (int i = 0; i < 4; i++)
+	{
+		EXPECT_EQ(arcos[posicionesDeAdyacentes[i]], adyacentesCcD[i]) << " fallo en la posicion: " << i << endl;
+	}
+
 }

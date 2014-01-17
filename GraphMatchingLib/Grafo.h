@@ -17,8 +17,10 @@ private:
 	std::deque<std::shared_ptr<Arco> > _arcos;
 	//Colección de vértices.
 	std::map<int, std::shared_ptr<Vertice> > _vertices;
-	//Método para determinar las adyacencias de los vértices.
-	void ExploraGrafo();
+	//Arbol de adyacencia
+	std::map<std::shared_ptr<Arco>, std::deque<std::shared_ptr<Arco> > > _listaAdyacencia;
+	//Método para agregar arcos a la lista de adyacencia y aumenta el grado del vértice especificado.
+	void AgregaALista(const std::shared_ptr<Arco>&, const std::shared_ptr<Arco>&, const std::shared_ptr<Vertice>&);
 	//Desplazamiento desde el origen, va a ser útil para sacar las formas canónicas derivadas.
 	int _offset;
 	//Dado que un grafo no puede ser leído 2 veces necesitamos marcar una bandera.
@@ -39,4 +41,8 @@ public:
 	void CreaFormaCanonica();
 	//Devuelve el nombre del grafo.
 	const std::string& GetNombre() const;
+	//Devuelve una colección de arcos que son adyacentes al arco pasado por parámetro.
+	const std::deque<std::shared_ptr<Arco> >& GetAdyacencia(const std::shared_ptr<Arco>&) const;
+	//Método para determinar las adyacencias de los arcos.
+	void ExploraGrafo();
 };
