@@ -9,12 +9,13 @@ class Etiqueta;
 class LVEV;
 
 //Enumera los tipos de estados en los que un arco puede encontrarse.
-//Ya sea como 'Visitado', 'Listo', o 'En espera'
+//Ya sea como 'Visitado', 'Listo', 'En espera' o 'Matcheado
 enum class EstadoArco
 {
 	VISITADO,
 	LISTO,
-	ESPERA
+	ESPERA,
+	MATCHEADO
 };
 
 //Clase que maneja el comportamiento de los arcos.
@@ -54,6 +55,12 @@ public:
 
 	//Nos regresa un puntero a el LVEV
 	const std::shared_ptr<LVEV>& GetLVEV() const;
+	
+	//Obtiene el estado actual del arco.
+	EstadoArco GetEstado() const;
+
+	//Cambia el estado del arco.
+	void SetEstado(EstadoArco);
 
 	//Calcula el grado del arco en base a su origen y destino.
 	void CalcularGrado();
@@ -61,8 +68,6 @@ public:
 	//Verifica si 2 arcos comparten el mismo lvev, para asuntos de identificación del patrón.
 	bool operator==(const Arco&) const;
 
-	//Cambia el estado del arco.
-	void CambiaEstado(EstadoArco);
 private:
 	std::shared_ptr<Vertice> _origen, _destino;
 	std::shared_ptr<Etiqueta> _etiqueta;

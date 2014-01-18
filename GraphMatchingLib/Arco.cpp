@@ -114,7 +114,12 @@ bool Arco::operator==(const Arco& otroArco) const
 	return _lvev == otroArco._lvev;
 }
 
-void Arco::CambiaEstado(EstadoArco estado)
+EstadoArco Arco::GetEstado() const
+{
+	return _estado;
+}
+
+void Arco::SetEstado(EstadoArco estado)
 {
 	_estado = estado;
 }

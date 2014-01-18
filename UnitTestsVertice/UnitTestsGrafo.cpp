@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -171,4 +172,90 @@ TEST(testGrafo, testVerificaAdyacenciasArcos)
 		EXPECT_EQ(arcos[posicionesDeAdyacentes[i]], adyacentesCcD[i]) << " fallo en la posicion: " << i << endl;
 	}
 
+}
+
+TEST(testGrafo, testFormaCanonicaGrafoSimple)
+{
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	stringstream ss;
+	//Nombre del arco
+	ss << "Grafo de prueba" << endl;
+	//Inserción de los vértices.
+	ss << "v 1 A" << endl;
+	ss << "v 2 U" << endl;
+	ss << "v 3 R" << endl;
+	ss << "v 4 Z" << endl;
+	//Inserción de aristas.
+	ss << "e 1 4 a" << endl;
+	ss << "e 1 3 b" << endl;
+	ss << "e 3 4 c" << endl;
+	ss << "e 2 4 a" << endl;
+
+	//Llenaremos el grafo con el flujo
+	ss >> g;
+
+	//Exploraremos el grafo.
+	g.ExploraGrafo();
+
+	auto arcosFormaNormal = g.GetArcos();
+	int resultadosEsperados[] = { 1, 0, 3, 2 };
+
+	//Creamos la forma canónica.
+	g.CreaFormaCanonica();
+	auto arcosFormaCanonica = g.GetArcos();
+
+	for (int i = 0; i < 4; i++)
+	{
+		EXPECT_EQ(arcosFormaNormal[resultadosEsperados[i]], arcosFormaCanonica[i]) << "fallo en la posicion " << i << endl
+			<< "Se esperaba: " << arcosFormaNormal[resultadosEsperados[i]]->GetLVEVString() << endl
+			<< "Se obtuvo: " << arcosFormaCanonica[i]->GetLVEVString() << endl;
+	}
+}
+
+TEST(testGrafo, testFormaCanonicaGrafoMediano)
+{
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	//Para mayor información, leer el grafo en la dirección del archivo.
+	ifstream entrada("C:\\Grafos\\g2.g");
+
+	//Llenamos el grafo con el flujo de entrada.
+	entrada >> g;
+
+	//Exploramos el grafo.
+	g.ExploraGrafo();
+
+	//Obtenemos los arcos en su forma normal.
+	auto arcosFormaNormal = g.GetArcos();
+
+	//Calculamos la forma canónica.
+	g.CreaFormaCanonica();
+
+	//Obtenemos los arcos ordenados en su forma canónica.
+	auto arcosFormaCanonica = g.GetArcos();
+
+	//Son los resultados de las posiciones que esperaríamos leer, para llegar a eso ver el archivo g2.g.out
+	int resultadosEsperados[] = { 1, 0, 2, 3, 4, 5, 7, 9, 8, 14, 13, 6, 12, 11, 10 };
+
+	for (int i = 0; i < 14; i++)
+	{
+		EXPECT_EQ(arcosFormaNormal[resultadosEsperados[i]], arcosFormaCanonica[i]) << "fallo en la posicion " << i << endl
+			<< "Se esperaba: " << arcosFormaNormal[resultadosEsperados[i]]->GetLVEVString() << endl
+			<< "Se obtuvo: " << arcosFormaCanonica[i]->GetLVEVString() << endl;
+	}
+}
+
+TEST(testGrafo, testFormaCanonicaDerivadaGrafoMediano)
+{
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	//Para mayor información, leer el grafo en la dirección del archivo.
+	ifstream entrada("C:\\Grafos\\g2.g");
+
+	//Llenamos el grafo con el flujo de entrada.
+	entrada >> g;
+
+	//Exploramos el grafo.
+	g.ExploraGrafo();
 }

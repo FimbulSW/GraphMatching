@@ -76,20 +76,127 @@ const std::deque<std::shared_ptr<Arco> >& Grafo::GetArcos() const
 
 void Grafo::CreaFormaCanonica()
 {
-	//Crearemos 2 deque, uno para los sucesores y otro para la forma canónica.
-	std::deque<Arco> canonica, sucesores;
-	//Ordenamos en base a la comparación de los arcos.
-	sort(_arcos.begin() + _offset, _arcos.end(), [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
+	//Crearemos un deque temporal para guardar nuestra forma canonica.
+	std::deque<std::shared_ptr<Arco> > canonica;
+
+	//Antes de comenzar pondremos todos los arcos en estado de espera, desde el _offset hasta el final de la lista.
+	for (int i = _offset, longitud = _arcos.size(); i < longitud; i++)
+	{
+		_arcos[i]->SetEstado(EstadoArco::ESPERA);
+	}
+	
+	//Con ésta función ordenaremos tanto _arcos.
+	ComparadorPunterosArcos funcionComparadora = [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
 	{
 		return *a1 < *a2;
-	}
-	);
+	};
+
+	//Con ésta funcion damos prioridad al priority_queue.
+	ComparadorPunterosArcos funcionColaPrioridad = [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
+	{
+		return *a2 < *a1;
+	};
+
+	//Instancia de nuestra cola priorizada.
+	ColaPriorizadaArcos colaSucesores(funcionColaPrioridad);
+
+	//Ordenamos en base a la comparación de los arcos.
+	sort(_arcos.begin() + _offset, _arcos.end(), funcionComparadora);
 
 	//Obtenemos la referencia del primer arco que cumpla todas las condiciones.
 	auto& arco = _arcos[_offset];
 
+	//Agregamos el primero a la cola priorizada, ya sabemos que es la raiz de la forma canónica.
+	colaSucesores.push(arco);
+
+	//Mientras nuestra cola no esté vacía...
+	while (!colaSucesores.empty())
+	{
+		//Obtenemos el primer arco en la cola, dado que está priorizada sabemos que es el mejor.
+		arco = colaSucesores.top();
+		colaSucesores.pop();
+
+		//Antes de agregarlo a la forma canónica lo pondremos como visitado.
+		arco->SetEstado(EstadoArco::VISITADO);
+
+		//Agregamos el arco a la forma canónica.
+		canonica.push_back(arco);
+		//Agregamos a la cola de prioridad todos los adyacentes al arco.
+		AgregarSucesores(colaSucesores, GetAdyacencia(arco));
+	}
+
 	//Si nuestro desplazamiento ya alcanza el final de nuestra  colección entonces lo dejamos con su valor, de otra forma aumentaremos 1.
 	_offset = _arcos.begin() + _offset == _arcos.end() ? _offset : _offset + 1;
+
+	//En este momento la forma canónica tiene todos los arcos del grafo, así que sólo igualamos _arcos a la forma canónica.
+	_arcos = canonica;
+}
+
+void Grafo::CrearFormaCanonicaDerivada()
+{
+	//Crearemos un deque temporal para guardar nuestra forma canonica.
+	std::deque<std::shared_ptr<Arco> > canonica;
+
+	//Antes de comenzar pondremos todos los arcos en estado de espera, desde el _offset hasta el final de la lista.
+	//Todos aquellos elementos que hayan matcheado se pasarán en ese mismo orden a la nueva forma canónica
+	//y no se les cambiará su estado, seguirán siempre como matcheados.
+	for (int i = _offset, longitud = _arcos.size(); i < longitud; i++)
+	{
+		if (_arcos[i]->GetEstado() == EstadoArco::MATCHEADO)
+		{
+			canonica.push_back(_arcos[i]);
+			continue;
+		}
+		_arcos[i]->SetEstado(EstadoArco::ESPERA);
+	}
+	//Si resulta que ninguno de los arcos logró hacer cumplir con algún patrón entonces tomaremos a la siguiente
+	//posición de la forma canónica anterior como nuestra raiz nueva.
+	if (canonica.size() == 0)
+	{
+		canonica.push_back(_arcos[_offset]);
+	}
+
+	//Con ésta funcion damos prioridad al priority_queue.
+	ComparadorPunterosArcos funcionColaPrioridad = [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
+	{
+		return *a2 < *a1;
+	};
+
+	//Instancia de nuestra cola priorizada.
+	ColaPriorizadaArcos colaSucesores(funcionColaPrioridad);
+
+	//Exploraremos todos los arcos que se encuentren en la lista canónica, incluyendo los que se irán
+	//agregando conforme se encuentren los adyacentes del mejor en turno.
+	for (int i = 0; canonica.begin() + i != canonica.end(); i++)
+	{
+		AgregarSucesores(colaSucesores, GetAdyacencia(canonica[i]));
+
+		if (colaSucesores.empty()) continue;
+
+		auto& arco = colaSucesores.top();
+		colaSucesores.pop();
+
+		arco->SetEstado(EstadoArco::VISITADO);
+		canonica.push_back(arco);
+	}
+	//Si nuestro desplazamiento ya alcanza el final de nuestra  colección entonces lo dejamos con su valor, de otra forma aumentaremos 1.
+	_offset = _arcos.begin() + _offset == _arcos.end() ? _offset : _offset + 1;
+
+	//En este momento la forma canónica tiene todos los arcos del grafo, así que sólo igualamos _arcos a la forma canónica.
+	_arcos = canonica;
+}
+
+void Grafo::AgregarSucesores(ColaPriorizadaArcos& cola, const std::deque<std::shared_ptr<Arco> >& listaArcos)
+{
+	//Agregaremos a nuestra cola priorizada sólo aquellos arcos que no estén visitados
+	for (auto arco : listaArcos)
+	{
+		if (arco->GetEstado() == EstadoArco::ESPERA)
+		{
+			arco->SetEstado(EstadoArco::LISTO);
+			cola.push(arco);
+		}
+	}
 }
 
 std::istream& operator >>(std::istream& entrada, Grafo& g)

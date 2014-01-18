@@ -5,9 +5,16 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <functional>
+#include <queue>
 
 class Arco;
 class Vertice;
+
+//Funcion para comparar los punteros a arcos.
+using ComparadorPunterosArcos = std::function<bool(const std::shared_ptr<Arco>&, const std::shared_ptr<Arco>& )>;
+//Alias para la cola de prioridad de los arcos, utilizado para obtener la forma canónica.
+using ColaPriorizadaArcos = std::priority_queue< std::shared_ptr<Arco>, std::deque<std::shared_ptr<Arco> >, ComparadorPunterosArcos >;
 
 //Clase que representa un grafo.
 class Grafo
@@ -21,6 +28,8 @@ private:
 	std::map<std::shared_ptr<Arco>, std::deque<std::shared_ptr<Arco> > > _listaAdyacencia;
 	//Método para agregar arcos a la lista de adyacencia y aumenta el grado del vértice especificado.
 	void AgregaALista(const std::shared_ptr<Arco>&, const std::shared_ptr<Arco>&, const std::shared_ptr<Vertice>&);
+	//Método para agregar los sucesores de un arco a una cola priorizada.
+	void AgregarSucesores(ColaPriorizadaArcos&, const std::deque<std::shared_ptr<Arco> >&);
 	//Desplazamiento desde el origen, va a ser útil para sacar las formas canónicas derivadas.
 	int _offset;
 	//Dado que un grafo no puede ser leído 2 veces necesitamos marcar una bandera.
@@ -39,6 +48,8 @@ public:
 	const std::deque<std::shared_ptr<Arco> >& GetArcos() const;
 	//Ordena los arcos del grafo a través de las reglas de exploración de primero el mejor.
 	void CreaFormaCanonica();
+	//Ordena los arcos del grafo a través de las reglas de la forma canónica derivada.
+	void CrearFormaCanonicaDerivada();
 	//Devuelve el nombre del grafo.
 	const std::string& GetNombre() const;
 	//Devuelve una colección de arcos que son adyacentes al arco pasado por parámetro.
