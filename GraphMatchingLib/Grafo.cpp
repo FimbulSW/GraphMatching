@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-Grafo::Grafo(int IdDespachador) : _idDespachador(IdDespachador), _offset(0), _leido(false), _nombre()
+Grafo::Grafo(int IdDespachador) : _idDespachador(IdDespachador), _leido(false), _nombre(), _calculadaFormaCanonica(false)
 {
 }
 
@@ -76,15 +76,29 @@ const std::deque<std::shared_ptr<Arco> >& Grafo::GetArcos() const
 
 void Grafo::CreaFormaCanonica()
 {
+	//Si no hemos calculado la forma canónica...
+	if (!_calculadaFormaCanonica)
+		//Calculamos la forma canónica.
+		CalculaFormaCanonica();
+	//De otra manera...
+	else
+		//Calculamos la forma canónica derivada.
+		CalculaFormaCanonicaDerivada();
+	//Al terminar éste método al menos se ha calculado ya la forma canónica.
+	_calculadaFormaCanonica = true;
+}
+
+void Grafo::CalculaFormaCanonica()
+{
 	//Crearemos un deque temporal para guardar nuestra forma canonica.
 	std::deque<std::shared_ptr<Arco> > canonica;
 
 	//Antes de comenzar pondremos todos los arcos en estado de espera, desde el _offset hasta el final de la lista.
-	for (int i = _offset, longitud = _arcos.size(); i < longitud; i++)
+	for (int i = 0, longitud = _arcos.size(); i < longitud; i++)
 	{
 		_arcos[i]->SetEstado(EstadoArco::ESPERA);
 	}
-	
+
 	//Con ésta función ordenaremos tanto _arcos.
 	ComparadorPunterosArcos funcionComparadora = [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
 	{
@@ -101,10 +115,10 @@ void Grafo::CreaFormaCanonica()
 	ColaPriorizadaArcos colaSucesores(funcionColaPrioridad);
 
 	//Ordenamos en base a la comparación de los arcos.
-	sort(_arcos.begin() + _offset, _arcos.end(), funcionComparadora);
+	sort(_arcos.begin(), _arcos.end(), funcionComparadora);
 
 	//Obtenemos la referencia del primer arco que cumpla todas las condiciones.
-	auto& arco = _arcos[_offset];
+	std::shared_ptr<Arco> arco = _arcos[0];
 
 	//Agregamos el primero a la cola priorizada, ya sabemos que es la raiz de la forma canónica.
 	colaSucesores.push(arco);
@@ -125,14 +139,11 @@ void Grafo::CreaFormaCanonica()
 		AgregarSucesores(colaSucesores, GetAdyacencia(arco));
 	}
 
-	//Si nuestro desplazamiento ya alcanza el final de nuestra  colección entonces lo dejamos con su valor, de otra forma aumentaremos 1.
-	_offset = _arcos.begin() + _offset == _arcos.end() ? _offset : _offset + 1;
-
 	//En este momento la forma canónica tiene todos los arcos del grafo, así que sólo igualamos _arcos a la forma canónica.
 	_arcos = canonica;
 }
 
-void Grafo::CrearFormaCanonicaDerivada()
+void Grafo::CalculaFormaCanonicaDerivada()
 {
 	//Crearemos un deque temporal para guardar nuestra forma canonica.
 	std::deque<std::shared_ptr<Arco> > canonica;
@@ -140,7 +151,7 @@ void Grafo::CrearFormaCanonicaDerivada()
 	//Antes de comenzar pondremos todos los arcos en estado de espera, desde el _offset hasta el final de la lista.
 	//Todos aquellos elementos que hayan matcheado se pasarán en ese mismo orden a la nueva forma canónica
 	//y no se les cambiará su estado, seguirán siempre como matcheados.
-	for (int i = _offset, longitud = _arcos.size(); i < longitud; i++)
+	for (int i = 1, longitud = _arcos.size(); i < longitud; i++)
 	{
 		if (_arcos[i]->GetEstado() == EstadoArco::MATCHEADO)
 		{
@@ -153,7 +164,7 @@ void Grafo::CrearFormaCanonicaDerivada()
 	//posición de la forma canónica anterior como nuestra raiz nueva.
 	if (canonica.size() == 0)
 	{
-		canonica.push_back(_arcos[_offset]);
+		canonica.push_back(_arcos[1]);
 	}
 
 	//Con ésta funcion damos prioridad al priority_queue.
@@ -173,14 +184,12 @@ void Grafo::CrearFormaCanonicaDerivada()
 
 		if (colaSucesores.empty()) continue;
 
-		auto& arco = colaSucesores.top();
+		std::shared_ptr<Arco> arco = colaSucesores.top();
 		colaSucesores.pop();
 
 		arco->SetEstado(EstadoArco::VISITADO);
 		canonica.push_back(arco);
 	}
-	//Si nuestro desplazamiento ya alcanza el final de nuestra  colección entonces lo dejamos con su valor, de otra forma aumentaremos 1.
-	_offset = _arcos.begin() + _offset == _arcos.end() ? _offset : _offset + 1;
 
 	//En este momento la forma canónica tiene todos los arcos del grafo, así que sólo igualamos _arcos a la forma canónica.
 	_arcos = canonica;

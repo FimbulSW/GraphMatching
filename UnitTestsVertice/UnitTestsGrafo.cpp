@@ -2,6 +2,7 @@
 
 #include "Grafo.h"
 #include "Arco.h"
+#include "DespachadorLVEV.h"
 
 #include <iostream>
 #include <string>
@@ -14,6 +15,9 @@ using namespace std;
 //Sólo se leerán 2 vértices y un arco.
 TEST(testGrafo, testLecturaGrafoSimple)
 {
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+	
 	Grafo g;
 	//Flujo que utilizaremos para la lectura del grafo
 	stringstream ss;
@@ -36,6 +40,9 @@ TEST(testGrafo, testLecturaGrafoSimple)
 //Esta prueba pretende leer un grafo pequeño de 7 vértices y 5 árcos.
 TEST(testGrafo, testLecutraGrafoMediano)
 {
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
 	Grafo g;
 	//Flujo que utilizaremos para la lectura del grafo
 	stringstream ss;
@@ -76,6 +83,9 @@ TEST(testGrafo, testLecutraGrafoMediano)
 //de la implementación.
 TEST(testGrafo, testCalculaGradoArcos)
 {
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
 	Grafo g;
 	//Flujo que utilizaremos para la lectura del grafo
 	stringstream ss;
@@ -123,6 +133,9 @@ TEST(testGrafo, testCalculaGradoArcos)
 //Esta prueba pretende verificar que la colección de arcos adyacentes unos con otros funcione de manera adecuada.
 TEST(testGrafo, testVerificaAdyacenciasArcos)
 {
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
 	Grafo g;
 	//Flujo que utilizaremos para la lectura del grafo
 	stringstream ss;
@@ -176,6 +189,9 @@ TEST(testGrafo, testVerificaAdyacenciasArcos)
 
 TEST(testGrafo, testFormaCanonicaGrafoSimple)
 {
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
 	Grafo g;
 	//Flujo que utilizaremos para la lectura del grafo
 	stringstream ss;
@@ -215,6 +231,9 @@ TEST(testGrafo, testFormaCanonicaGrafoSimple)
 
 TEST(testGrafo, testFormaCanonicaGrafoMediano)
 {
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
 	Grafo g;
 	//Flujo que utilizaremos para la lectura del grafo
 	//Para mayor información, leer el grafo en la dirección del archivo.
@@ -248,6 +267,9 @@ TEST(testGrafo, testFormaCanonicaGrafoMediano)
 
 TEST(testGrafo, testFormaCanonicaDerivadaGrafoMediano)
 {
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
 	Grafo g;
 	//Flujo que utilizaremos para la lectura del grafo
 	//Para mayor información, leer el grafo en la dirección del archivo.
@@ -258,4 +280,90 @@ TEST(testGrafo, testFormaCanonicaDerivadaGrafoMediano)
 
 	//Exploramos el grafo.
 	g.ExploraGrafo();
+
+	//Obtenemos los arcos de la forma canónica.
+	g.CreaFormaCanonica();
+	auto arcosFC = g.GetArcos();
+
+	//Marcaremos como matcheados a los arcos 5, 6, 10 de la forma canónica.
+	arcosFC[5]->SetEstado(EstadoArco::MATCHEADO);
+	arcosFC[6]->SetEstado(EstadoArco::MATCHEADO);
+	arcosFC[10]->SetEstado(EstadoArco::MATCHEADO);
+
+	//Generamos la forma canónica derivada.
+	g.CreaFormaCanonica();
+	//Obtenemos los arcos de la forma canónica derivada
+	auto arcosFCD = g.GetArcos();
+
+	int resultadosEsperados[] = { 5, 6, 10, 1, 3, 7, 2, 4, 8, 9, 11, 12, 13, 14 };
+
+	//Al formar la forma canónica derivada se supone que la lista de arcos se reduce en 1
+	//dado que siempre se elimina la raiz.
+	EXPECT_EQ(arcosFC.size() - 1, arcosFCD.size());
+
+	for (int i = 0, longitud = arcosFCD.size(); i < longitud; i++)
+	{
+		EXPECT_EQ(arcosFC[resultadosEsperados[i]], arcosFCD[i]) << "fallo en la posicion " << i << endl
+			<< "Se esperaba: " << arcosFC[resultadosEsperados[i]]->GetLVEVString() << endl
+			<< "Se obtuvo: " << arcosFCD[i]->GetLVEVString() << endl;
+	}
+}
+
+TEST(testGrafo, testSegundaFormaCanonicaDerivadaGrafoMediano)
+{
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	//Para mayor información, leer el grafo en la dirección del archivo.
+	ifstream entrada("C:\\Grafos\\g2.g");
+
+	//Llenamos el grafo con el flujo de entrada.
+	entrada >> g;
+
+	//Exploramos el grafo.
+	g.ExploraGrafo();
+
+	//Obtenemos los arcos de la forma canónica.
+	g.CreaFormaCanonica();
+	auto arcosFC = g.GetArcos();
+
+	//Marcaremos como matcheados a los arcos 5, 6, 10 de la forma canónica.
+	arcosFC[5]->SetEstado(EstadoArco::MATCHEADO);
+	arcosFC[6]->SetEstado(EstadoArco::MATCHEADO);
+	arcosFC[10]->SetEstado(EstadoArco::MATCHEADO);
+
+	//Obtenemos la primera forma canónica derivada.
+	g.CreaFormaCanonica();
+
+	//Obtenemos los arcos de la primera forma canónica derivada.
+	auto arcosPFCD = g.GetArcos();
+
+	//Pondremos como matcheados los siguientes arcos
+	//3, 4, 13
+	arcosPFCD[3]->SetEstado(EstadoArco::MATCHEADO);
+	arcosPFCD[4]->SetEstado(EstadoArco::MATCHEADO);
+	arcosPFCD[13]->SetEstado(EstadoArco::MATCHEADO);
+
+	//Obtenemos la segunda forma canónica derivada.
+	g.CreaFormaCanonica();
+
+	//Obtenemos los arcos de la segunda forma canónica derivada.
+	auto arcosSFCD = g.GetArcos();
+
+	//Los resultados esperados (el orden de los arcos) son en base a los arcos de la forma canónica original.
+	int resultadosEsperados[] = { 6, 10, 1, 3, 14, 7, 13, 2, 4, 8, 9, 11, 12 };
+
+	//Esperamos que el tamaño de la segunda forma canónica derivada sea uno menor 
+	//que el de la primera forma canónica derivada.
+	EXPECT_EQ(arcosPFCD.size() - 1, arcosSFCD.size());
+
+	//Ahora corroboramos las posiciones en comparación a los de la forma canónica.
+	for (int i = 0, longitud = arcosSFCD.size(); i < longitud; i++)
+	{
+		EXPECT_EQ(arcosFC[resultadosEsperados[i]], arcosSFCD[i]) << "fallo en la posicion " << i << endl
+			<< "Se esperaba: " << arcosFC[resultadosEsperados[i]]->GetLVEVString() << endl
+			<< "Se obtuvo: " << arcosSFCD[i]->GetLVEVString() << endl;
+	}
 }

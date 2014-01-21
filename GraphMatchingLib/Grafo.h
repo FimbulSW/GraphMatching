@@ -30,14 +30,18 @@ private:
 	void AgregaALista(const std::shared_ptr<Arco>&, const std::shared_ptr<Arco>&, const std::shared_ptr<Vertice>&);
 	//Método para agregar los sucesores de un arco a una cola priorizada.
 	void AgregarSucesores(ColaPriorizadaArcos&, const std::deque<std::shared_ptr<Arco> >&);
-	//Desplazamiento desde el origen, va a ser útil para sacar las formas canónicas derivadas.
-	int _offset;
 	//Dado que un grafo no puede ser leído 2 veces necesitamos marcar una bandera.
 	bool _leido;
 	//Nombre del grafo.
 	std::string _nombre;
 	//ID del despachador de LVEV
 	int _idDespachador;
+	//¿Se ha calculado la forma canonica?
+	bool _calculadaFormaCanonica;
+	//Método auxiliar para calcular la forma canónica.
+	void CalculaFormaCanonica();
+	//Método auxiliar para calcular la forma canónica derivada.
+	void CalculaFormaCanonicaDerivada();
 public:
 	//Constructor del grafo, necesitamos especificar un id del despachador de LVEV, de otra forma será por default 0.
 	Grafo(int = 0);
@@ -47,9 +51,9 @@ public:
 	//Regresa los arcos pertenecientes al grafo.
 	const std::deque<std::shared_ptr<Arco> >& GetArcos() const;
 	//Ordena los arcos del grafo a través de las reglas de exploración de primero el mejor.
+	//La primera vez que se invoque generará la forma canónica.
+	//Si se invoca n veces se creará la (n-1)-ésima forma canónica derivada.
 	void CreaFormaCanonica();
-	//Ordena los arcos del grafo a través de las reglas de la forma canónica derivada.
-	void CrearFormaCanonicaDerivada();
 	//Devuelve el nombre del grafo.
 	const std::string& GetNombre() const;
 	//Devuelve una colección de arcos que son adyacentes al arco pasado por parámetro.
