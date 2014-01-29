@@ -80,6 +80,7 @@
     <ClInclude Include="Etiqueta.h" />
     <ClInclude Include="Grafo.h" />
     <ClInclude Include="LVEV.h" />
+    <ClInclude Include="Matcheador.h" />
     <ClInclude Include="Vertice.h" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +90,7 @@
     <ClCompile Include="Etiqueta.cpp" />
     <ClCompile Include="Grafo.cpp" />
     <ClCompile Include="LVEV.cpp" />
+    <ClCompile Include="Matcheador.cpp" />
     <ClCompile Include="Vertice.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

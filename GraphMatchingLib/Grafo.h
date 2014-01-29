@@ -50,6 +50,8 @@ public:
 	friend std::istream& operator >>(std::istream&, Grafo&);
 	//Regresa los arcos pertenecientes al grafo.
 	const std::deque<std::shared_ptr<Arco> >& GetArcos() const;
+	//Regresa los arcos que tienen el mismo lvev que el parámetro.
+	std::deque<std::shared_ptr<Arco> > GetArcos(const std::shared_ptr<Arco>&) const;
 	//Ordena los arcos del grafo a través de las reglas de exploración de primero el mejor.
 	//La primera vez que se invoque generará la forma canónica.
 	//Si se invoca n veces se creará la (n-1)-ésima forma canónica derivada.
@@ -59,5 +61,7 @@ public:
 	//Devuelve una colección de arcos que son adyacentes al arco pasado por parámetro.
 	const std::deque<std::shared_ptr<Arco> >& GetAdyacencia(const std::shared_ptr<Arco>&) const;
 	//Método para determinar las adyacencias de los arcos.
+	bool EsAdyacente(const std::shared_ptr<Arco>&, const std::shared_ptr<Arco>&) const;
+	//Método para iniciar la exploración del arco.
 	void ExploraGrafo();
 };

@@ -74,6 +74,19 @@ const std::deque<std::shared_ptr<Arco> >& Grafo::GetArcos() const
 	return _arcos;
 }
 
+std::deque<std::shared_ptr<Arco> > Grafo::GetArcos(const std::shared_ptr<Arco>& busqueda) const
+{
+	std::deque<std::shared_ptr<Arco> > resultado;
+	// Exploramos la lista de adyacencia
+	for (auto it : _listaAdyacencia)
+	{
+		// Si el lvev de la lista es igual al lvev del arco entonces lo guardamos en el resultado.
+		if (*it.first == *busqueda)
+			resultado.push_back(it.first);
+	}
+	return resultado;
+}
+
 void Grafo::CreaFormaCanonica()
 {
 	//Si no hemos calculado la forma canónica...
@@ -145,6 +158,14 @@ void Grafo::CalculaFormaCanonica()
 
 void Grafo::CalculaFormaCanonicaDerivada()
 {
+	//Si la forma canónica anterior sólo tenía un arco, entonces la derivada es vacía.
+	//Y por lo mismo ya no hace falta hacer más cálculos.
+	if (_arcos.size() <= 1)
+	{
+		_arcos.clear();
+		return;
+	}
+
 	//Crearemos un deque temporal para guardar nuestra forma canonica.
 	std::deque<std::shared_ptr<Arco> > canonica;
 
@@ -248,6 +269,22 @@ std::istream& operator >>(std::istream& entrada, Grafo& g)
 		}
 	}
 	return entrada;
+}
+
+bool Grafo::EsAdyacente(const std::shared_ptr<Arco>& arcoVerificar, const std::shared_ptr<Arco>& arcoBuscar) const
+{
+	//Buscamos si es que se encuentra el arco a verificar en el grafo.
+	auto it = _listaAdyacencia.find(arcoVerificar);
+	//De no ser así entonces no sabemos si es adyacente, por lo que regresamos false.
+	if (it == _listaAdyacencia.end()) return false;
+	
+	auto adyacentes = it->second;
+	for (auto arcoAdyacente : adyacentes)
+	{
+		//Si el arco a buscar se encuentra en la lista de adyacentes entonces retornamos true.
+		if (arcoAdyacente == arcoBuscar) return true;
+	}
+	return false;
 }
 
 const std::string& Grafo::GetNombre() const
