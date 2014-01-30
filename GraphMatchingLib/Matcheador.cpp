@@ -2,6 +2,23 @@
 #include "Grafo.h"
 #include "Arco.h"
 
+#include <set>
+
+Patron::Patron() : Expandible(true) { }
+
+Patron::Patron(Patron& patron) : Expandible(true)
+{
+	ArcosGrafoMuestra = patron.ArcosGrafoMuestra;
+	ArcosGrafoBusqueda = patron.ArcosGrafoBusqueda;
+}
+
+void Patron::AgregarArcos(std::shared_ptr<Arco>& arcoMuestra, std::shared_ptr<Arco>& arcoBusqueda)
+{
+	ArcosGrafoMuestra.push_back(arcoMuestra);
+	ArcosGrafoBusqueda.push_back(arcoBusqueda);
+	arcoBusqueda->SetEstado(EstadoArco::MATCHEADO);
+}
+
 
 Matcheador::Matcheador(Grafo& Muestra, Grafo& Busqueda) : _muestra(Muestra), _busqueda(Busqueda)
 {
@@ -30,6 +47,17 @@ bool Matcheador::EsCandidato(std::shared_ptr<Patron>& patron,
 	}
 	//Si termina la iteración quiere decir que ha pasado los filtros, por lo que sí es un candidato.
 	return true;
+}
+
+std::deque<std::shared_ptr<Arco> > Matcheador::FiltraCandidatos(std::shared_ptr<Patron>& patron, std::shared_ptr<Arco>& arcoMuestra, std::deque<std::shared_ptr<Arco> >& arcosSimilares)
+{
+	std::deque<std::shared_ptr<Arco> > resultado;
+	for (auto arco : arcosSimilares)
+	{ 
+		if (EsCandidato(patron, arcoMuestra, arco))
+			resultado.push_back(arco);
+	}
+	return resultado;
 }
 
 void Matcheador::MarcaExpansionPatron(std::shared_ptr<Patron>& patron)
@@ -76,11 +104,77 @@ void Matcheador::ObtenerRaices(std::shared_ptr<Arco>& raiz)
 			// Creamos el nuevo patrón, agregando la raiz y el arco de búsqueda como su primeros arcos.
 			auto nuevoPatron = std::make_shared<Patron>();
 			nuevoPatron->AgregarArcos(raiz, arcoBusqueda);
-			// Dado que éste arco ya ha sido matcheado con algún arco del grafo de búsqueda
-			// lo pondremos como matcheado.
-			arcoBusqueda->SetEstado(EstadoArco::MATCHEADO);
+			
 			// Por último agregamos el nuevo patrón a nuestra colección.
 			_patrones.push_back(nuevoPatron);
 		}
 	}
+}
+
+void Matcheador::ExpandirPatrones()
+{
+	//TODO:
+	// Agregar el comportamiento adecuado para la expansión de patrones...
+
+	auto inicioPatrones = _patrones.begin();
+	for (int i = 0; inicioPatrones + i != _patrones.end(); i++)
+	{
+		if (_patrones[i]->Expandible)
+			ExpandirPatron(_patrones[i]);
+	}
+}
+
+void Matcheador::ExpandirPatron(std::shared_ptr<Patron>& patron)
+{
+	auto arcosMuestra = _muestra.GetArcos();
+	for (auto arcoMuestra : arcosMuestra)
+	{
+		auto arcosCandidatos = FiltraCandidatos(patron, arcoMuestra, _busqueda.GetArcos(arcoMuestra));
+		if (arcosCandidatos.size() == 0) continue;
+		if (arcosCandidatos.size() > 1)
+			CreaClones(patron, arcoMuestra, arcosCandidatos);
+			
+		patron->AgregarArcos(arcoMuestra, arcosCandidatos[0]);
+	}
+}
+
+void Matcheador::CreaClones(std::shared_ptr<Patron>& patron, std::shared_ptr<Arco>& arcoMuestra, std::deque<std::shared_ptr<Arco> >& candidatos)
+{
+	// Exploramos todos los arcos que son posibles candidatos al arcoMuestra, excepto el 0
+	// porque es el que le corresponde al patrón original.
+	for (int i = 1, tamano = candidatos.size(); i < tamano; i++)
+	{
+		// Se crea un patrón copia
+		auto nuevoPatron = std::make_shared<Patron>(*patron);
+		// Se le asignan los respectivos arcos (muestra y búsqueda)
+		nuevoPatron->AgregarArcos(arcoMuestra, candidatos[i]);
+
+		_patrones.push_back(nuevoPatron);
+	}
+}
+
+void Matcheador::MatcheaGrafos()
+{
+	_muestra.CreaFormaCanonica();
+	auto arcosMuestra = _muestra.GetArcos();
+	while (_busqueda.Vacio() || arcosMuestra.size() > 0)
+	{
+		MarcaExpansiones();
+		ObtenerRaices(arcosMuestra[0]);
+		ExpandirPatrones();
+		_busqueda.EliminaMatcheados();
+		_muestra.CreaFormaCanonica();
+		arcosMuestra = _muestra.GetArcos();
+	}
+}
+
+std::deque<std::shared_ptr<Patron> > Matcheador::GetPatrones(int soporte)
+{
+	std::deque<std::shared_ptr<Patron> > resultado;
+	for (auto patron : _patrones)
+	{
+		if (patron->ArcosGrafoBusqueda.size() >= soporte)
+			resultado.push_back(patron);
+	}
+	return resultado;
 }

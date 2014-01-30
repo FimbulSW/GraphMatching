@@ -297,3 +297,30 @@ const std::deque<std::shared_ptr<Arco> >& Grafo::GetAdyacencia(const std::shared
 	auto& lista = _listaAdyacencia.find(arco)->second;
 	return lista;
 }
+
+void Grafo::EliminaArco(std::shared_ptr<Arco>& arco)
+{
+	//Encontramos el arco a eliminar
+	auto it = _listaAdyacencia.find(arco);
+	//Si ya no existe entonces salimos.
+	if (it == _listaAdyacencia.end()) return;
+	//De lo contrario lo eliminamos.
+	_listaAdyacencia.erase(it);
+}
+
+void Grafo::EliminaMatcheados()
+{
+	//Buscamos en toda nuestra lista de arcos de búsqueda y eliminamos los matcheados.
+	for (auto arco : _arcos)
+	{
+		if (arco->GetEstado() == EstadoArco::MATCHEADO)
+		{
+			_listaAdyacencia.erase(arco);
+		}
+	}
+}
+
+bool Grafo::Vacio() const
+{
+	return _listaAdyacencia.size() == 0;
+}
