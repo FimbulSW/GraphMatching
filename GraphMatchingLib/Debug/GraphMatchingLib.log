@@ -1,8 +1,9 @@
-﻿Compilación iniciada a las 20/01/2014 07:10:50 p.m..
+﻿Compilación iniciada a las 01/02/2014 03:36:08 p.m..
      1>Proyecto "C:\GitHub\GraphMatching\GraphMatchingLib\GraphMatchingLib.vcxproj" en el nodo 3 (Rebuild destinos).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Arco.cpp DespachadorEtiquetas.cpp DespachadorLVEV.cpp Etiqueta.cpp Grafo.cpp LVEV.cpp Vertice.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Arco.cpp DespachadorEtiquetas.cpp DespachadorLVEV.cpp Etiqueta.cpp Grafo.cpp LVEV.cpp Matcheador.cpp Vertice.cpp
          Vertice.cpp
+         Matcheador.cpp
          LVEV.cpp
          Grafo.cpp
          Etiqueta.cpp
@@ -17,10 +18,11 @@
          Debug\Etiqueta.obj
          Debug\Grafo.obj
          Debug\LVEV.obj
+         Debug\Matcheador.obj
          Debug\Vertice.obj
          GraphMatchingLib.vcxproj -> C:\GitHub\GraphMatching\Debug\GraphMatchingLib.lib
      1>Compilación del proyecto terminada "C:\GitHub\GraphMatching\GraphMatchingLib\GraphMatchingLib.vcxproj" (Rebuild destinos).
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:09.68
+Tiempo transcurrido 00:00:10.52

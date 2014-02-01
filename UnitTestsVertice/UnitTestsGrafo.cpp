@@ -367,3 +367,148 @@ TEST(testGrafo, testSegundaFormaCanonicaDerivadaGrafoMediano)
 			<< "Se obtuvo: " << arcosSFCD[i]->GetLVEVString() << endl;
 	}
 }
+
+TEST(testGrafo, testVerificaAdyacencia)
+{
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	//Para mayor información, leer el grafo en la dirección del archivo.
+	ifstream entrada("C:\\Grafos\\g1p.g");
+
+	//Llenamos el grafo con el flujo de entrada.
+	entrada >> g;
+
+	//Exploramos el grafo.
+	g.ExploraGrafo();
+
+	//Obtenemos los arcos.
+	auto arcos = g.GetArcos();
+
+	//De acuerdo a la lectura del grafo, éste debería ser el arco AbR 1 3
+	auto arcoAbR = arcos[0]; 
+	//Este tendría que ser el arco AaZ 1 4
+	auto arcoAaZ = arcos[1];
+	//Este tendría que ser el arco UaZ 2 4
+	auto arcoUaZ = arcos[2];
+
+	//Se supone que el primer y segundo arco son adyacentes
+	EXPECT_EQ(true, g.EsAdyacente(arcoAbR, arcoAaZ));
+	//El segundo y el tercero son adyacentes
+	EXPECT_EQ(true, g.EsAdyacente(arcoUaZ, arcoAaZ));
+	//El primero y el tercero NO son adyacentes.
+	EXPECT_EQ(false, g.EsAdyacente(arcoAbR, arcoUaZ));
+
+}
+
+TEST(testGrafo, testObtenerArcosConIgualLVEV)
+{
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	//Para mayor información, leer el grafo en la dirección del archivo.
+	ifstream entrada("C:\\Grafos\\g5.g");
+
+	const int tamanoAcB = 2;
+	const int tamanoAbD = 2;
+
+	//Llenamos el grafo con el flujo de entrada.
+	entrada >> g;
+
+	//Exploramos el grafo.
+	g.ExploraGrafo();
+
+	auto arcosTotales = g.GetArcos();
+
+	//La posición 0 debería ser del arco AcB 1 2.
+	auto arcoAcB_1_2 = arcosTotales[0];
+	//La posicion 1 debería ser del arco AbD 1 3.
+	auto arcoAbD_1_3 = arcosTotales[1];
+	
+	//Nos debería regresar una colección con todos los arcos que existen en la lista de adyacencia
+	//que comparten en mismo LVEV, en este caso deberían ser 2.
+	auto arcosSimilaresAcB = g.GetArcos(arcoAcB_1_2);
+	
+	//Lo mismo aplica para este arco.
+	auto arcosSimilaresAbD = g.GetArcos(arcoAbD_1_3);
+
+	EXPECT_EQ(tamanoAbD, arcosSimilaresAbD.size());
+	EXPECT_EQ(tamanoAcB, arcosSimilaresAcB.size());
+
+	for (int i = 0; i < tamanoAbD; i++)
+	{
+		EXPECT_EQ(*arcoAbD_1_3, *arcosSimilaresAbD[i]);
+	}
+
+	for (int i = 0; i < tamanoAcB; i++)
+	{
+		EXPECT_EQ(*arcoAcB_1_2, *arcosSimilaresAcB[i]);
+	}
+}
+
+TEST(testGrafo, testEliminaArcosMatcheados)
+{
+	//Limpiamos el despachador, sólo para fines de testeo.
+	DespachadorLVEV::GetInstancia().Vacia();
+
+	Grafo g;
+	//Flujo que utilizaremos para la lectura del grafo
+	//Para mayor información, leer el grafo en la dirección del archivo.
+	ifstream entrada("C:\\Grafos\\g1p.g");
+
+	//Llenamos el grafo con el flujo de entrada.
+	entrada >> g;
+
+	//Exploramos el grafo.
+	g.ExploraGrafo();
+
+	//Obtenemos los arcos.
+	auto arcosTotales = g.GetArcos();
+
+	//Sabemos que la posición 0 del arco tiene el arco AcB 1 2
+	//por lo que marcaremos como matcheados a esos arcos
+
+	//Marcaremos como matcheados a todos los arcos AcB
+	auto arcosAcB = g.GetArcos(arcosTotales[0]);
+	//Haremos lo mismo con los arcos AbD, que está en la posición 1 del grafo.
+	auto arcosAbD = g.GetArcos(arcosTotales[1]);
+
+
+	const int tamanoArcosTotal = arcosTotales.size();
+	const int totalArcosEliminados = arcosAcB.size() + arcosAbD.size();
+
+	//Verificamos que el tamano de la lista de adyacencia sea la esperada.
+	EXPECT_EQ(tamanoArcosTotal, g.TamanoAdyacencia());
+
+	//Marcaremos como matcheados los arcos deseados.
+	for (int i = 0, tamano = arcosAcB.size(); i < tamano; i++)
+	{
+		arcosAcB[i]->SetEstado(EstadoArco::MATCHEADO);
+	}
+
+	for (int i = 0, tamano = arcosAbD.size(); i < tamano; i++)
+	{
+		arcosAbD[i]->SetEstado(EstadoArco::MATCHEADO);
+	}
+
+	//Eliminando los matcheados
+	g.EliminaMatcheados();
+
+	//Se supone que el tamano de la adyacencia debería de bajar en base al tamano de arcos eliminados.
+	EXPECT_EQ(tamanoArcosTotal - totalArcosEliminados, g.TamanoAdyacencia());
+	
+	//Esperamos también que dichos arcos ya no aparezcan en la lista.
+	for (int i = 0, tamano = arcosAcB.size(); i < tamano; i++)
+	{
+		EXPECT_EQ(false, g.Existe(arcosAcB[i]));
+	}
+
+	for (int i = 0, tamano = arcosAbD.size(); i < tamano; i++)
+	{
+		EXPECT_EQ(false, g.Existe(arcosAbD[i]));
+	}
+}

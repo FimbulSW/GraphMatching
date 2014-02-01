@@ -31,9 +31,7 @@ Arco::~Arco(void)
 
 std::ostream& operator<<(std::ostream& salida, const Arco& arco)
 {
-	salida<<"Arco con etiqueta: "<<arco._etiqueta->_etiqueta<<std::endl;
-	salida<<"Origen: "<<*arco._origen<<std::endl;
-	salida<<"Destino: "<<*arco._destino<<std::endl;
+	salida << arco.GetLVEVString() << " " << *arco._origen << " " << *arco._destino;
 	return salida;
 }
 
@@ -111,7 +109,7 @@ bool Arco::operator<(const Arco& otroArco) const
 
 bool Arco::operator==(const Arco& otroArco) const
 {
-	return _lvev == otroArco._lvev;
+	return *_lvev == *otroArco._lvev;
 }
 
 EstadoArco Arco::GetEstado() const

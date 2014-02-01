@@ -36,7 +36,7 @@ std::ostream& operator <<(std::ostream& salida, const Vertice& v)
 {
 	//El formato de salida que se le dará es del tipo:
 	//Etiqueta\tEnumeración\tGrado
-	salida<<v._etiqueta->_etiqueta<<"\t"<<v._enumeracion<<"\t"<<v._grado;
+	salida << v._enumeracion;
 	return salida;
 }
 

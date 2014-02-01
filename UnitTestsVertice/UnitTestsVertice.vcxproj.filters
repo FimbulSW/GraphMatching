@@ -33,5 +33,8 @@
     <ClCompile Include="UnitTestsGrafo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="UnitTestsMatcheador.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

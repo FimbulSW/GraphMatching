@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <deque>
+#include <iostream>
 
 class Arco;
 class Grafo;
@@ -32,11 +33,16 @@ struct Patron
 // Complejidad NP			
 class Matcheador
 {
-private:
+protected:
 	Grafo& _busqueda;
 	Grafo& _muestra;
+	std::ostream* salida;
+
+	int _cuentaPatrones;
+	bool _hacerLog;
 
 	std::deque<std::shared_ptr<Patron> > _patrones;
+
 
 	// Muestra si el arco de muestra y de búsqueda son candidatos para entrar al patrón.
 	bool EsCandidato(std::shared_ptr<Patron>&, const std::shared_ptr<Arco>&, const std::shared_ptr<Arco>&);
@@ -66,19 +72,24 @@ private:
 	// y a cada uno de ellos se les asignará un arco diferente.
 	void CreaClones(std::shared_ptr<Patron>&, std::shared_ptr<Arco>&, std::deque<std::shared_ptr<Arco> >&);
 
+	void AgregarPatron(std::shared_ptr<Patron>&);
+
 public:
 	// Crea una instancia de matcheador.
 	// El primer parámetro es el grafo de muestra, del cual se generarán sus formas canóncas.
 	// El segundo parámetro es el grafo de búsqueda, en el cual se encontrarán los patrones.
-	Matcheador(Grafo&, Grafo&);
+	Matcheador(Grafo&, Grafo&, bool = false);
 
 	// Método que se encarga de encontrar los patrones del grafo de muestra con respecto al de búsqueda.
 	// Complejidad NP.
-	void MatcheaGrafos();
+	// Retorna el número de iteraciones que tomó matchear los grafos.
+	int MatcheaGrafos();
+
+	void CambiaFlujo(std::ostream*);
 
 	// Obtiene todos los patrones que tengan un soporte igual o mayor al del parámetro.
 	std::deque<std::shared_ptr<Patron> > GetPatrones(int);
 
-	~Matcheador();
+	virtual ~Matcheador();
 };
 

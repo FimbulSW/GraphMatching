@@ -85,6 +85,7 @@
     <ClCompile Include="UnitTestsArco.cpp" />
     <ClCompile Include="UnitTestsDespachadorEtiquetas.cpp" />
     <ClCompile Include="UnitTestsGrafo.cpp" />
+    <ClCompile Include="UnitTestsMatcheador.cpp" />
     <ClCompile Include="UnitTestsVertice.cpp" />
   </ItemGroup>
   <ItemGroup>

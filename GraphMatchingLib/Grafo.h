@@ -92,4 +92,10 @@ public:
 
 	//Verifica si la lista de adyacencia del grafo es 0.
 	bool Vacio() const;
+
+	//Devuelve el tamaño actual de la lista de adyacencia.
+	int TamanoAdyacencia() const;
+
+	//Nos dice si el arco del parámetro existe o no dentro de nuestra lista de adyacencia.
+	bool Existe(std::shared_ptr<Arco>&) const;
 };

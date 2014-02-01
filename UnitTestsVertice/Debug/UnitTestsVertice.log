@@ -1,8 +1,9 @@
-﻿Compilación iniciada a las 20/01/2014 07:11:00 p.m..
+﻿Compilación iniciada a las 01/02/2014 03:36:18 p.m..
      1>Proyecto "C:\GitHub\GraphMatching\UnitTestsVertice\UnitTestsVertice.vcxproj" en el nodo 3 (Rebuild destinos).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\GitHub\GraphMatching\GraphMatchingLib /I"C:\gtest-1.6.0\include" /I"C:\gtest-1.6.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=10 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt UnitTestsDespachadorLVEV.cpp UnitTestsArco.cpp UnitTestsDespachadorEtiquetas.cpp UnitTestsGrafo.cpp UnitTestsVertice.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\GitHub\GraphMatching\GraphMatchingLib /I"C:\gtest-1.6.0\include" /I"C:\gtest-1.6.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=10 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt UnitTestsDespachadorLVEV.cpp UnitTestsArco.cpp UnitTestsDespachadorEtiquetas.cpp UnitTestsGrafo.cpp UnitTestsMatcheador.cpp UnitTestsVertice.cpp
          UnitTestsVertice.cpp
+         UnitTestsMatcheador.cpp
          UnitTestsGrafo.cpp
          UnitTestsDespachadorEtiquetas.cpp
          UnitTestsArco.cpp
@@ -13,6 +14,7 @@
          Debug\UnitTestsArco.obj
          Debug\UnitTestsDespachadorEtiquetas.obj
          Debug\UnitTestsGrafo.obj
+         Debug\UnitTestsMatcheador.obj
          Debug\UnitTestsVertice.obj
          C:\GitHub\GraphMatching\Debug\googleTest.lib
          C:\GitHub\GraphMatching\Debug\GraphMatchingLib.lib
@@ -21,4 +23,4 @@
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:08.68
+Tiempo transcurrido 00:00:10.69

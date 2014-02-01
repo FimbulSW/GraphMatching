@@ -315,7 +315,7 @@ void Grafo::EliminaMatcheados()
 	{
 		if (arco->GetEstado() == EstadoArco::MATCHEADO)
 		{
-			_listaAdyacencia.erase(arco);
+			EliminaArco(arco);
 		}
 	}
 }
@@ -323,4 +323,14 @@ void Grafo::EliminaMatcheados()
 bool Grafo::Vacio() const
 {
 	return _listaAdyacencia.size() == 0;
+}
+
+int Grafo::TamanoAdyacencia() const
+{
+	return _listaAdyacencia.size();
+}
+
+bool Grafo::Existe(std::shared_ptr<Arco>& arco) const
+{
+	return _listaAdyacencia.find(arco) != _listaAdyacencia.end();
 }
