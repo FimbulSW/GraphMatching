@@ -48,7 +48,7 @@ protected:
 	bool EsCandidato(std::shared_ptr<Patron>&, const std::shared_ptr<Arco>&, const std::shared_ptr<Arco>&);
 
 	// Regresa la colección de arcos que son candidatos para un patrón en específico.
-	std::deque<std::shared_ptr<Arco> > FiltraCandidatos(std::shared_ptr<Patron>&, std::shared_ptr<Arco>&, std::deque<std::shared_ptr<Arco> >&);
+	std::deque<std::shared_ptr<Arco> > FiltraCandidatos(std::shared_ptr<Patron>&, std::shared_ptr<Arco>&, const std::deque<std::shared_ptr<Arco> >&);
 
 	// Marca como expandible al patrón si algún arco del grafo de muestra concuerca con un elemento
 	// del patrón.

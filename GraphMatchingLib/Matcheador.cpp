@@ -2,8 +2,6 @@
 #include "Grafo.h"
 #include "Arco.h"
 
-#define DEBUG
-
 
 Patron::Patron() : Expandible(true) { }
 
@@ -52,7 +50,7 @@ bool Matcheador::EsCandidato(std::shared_ptr<Patron>& patron,
 	return true;
 }
 
-std::deque<std::shared_ptr<Arco> > Matcheador::FiltraCandidatos(std::shared_ptr<Patron>& patron, std::shared_ptr<Arco>& arcoMuestra, std::deque<std::shared_ptr<Arco> >& arcosSimilares)
+std::deque<std::shared_ptr<Arco> > Matcheador::FiltraCandidatos(std::shared_ptr<Patron>& patron, std::shared_ptr<Arco>& arcoMuestra, const std::deque<std::shared_ptr<Arco> >& arcosSimilares)
 {
 	std::deque<std::shared_ptr<Arco> > resultado;
 	for (auto arco : arcosSimilares)
