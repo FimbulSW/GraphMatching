@@ -22,8 +22,10 @@ TEST(testGrafo, testLecturaGrafoSimple)
 	//Flujo que utilizaremos para la lectura del grafo
 	stringstream ss;
 	ss << "Grafo de prueba" << endl;
+	ss << "% Esto es solo un comentario, tiene que ignorarlo" << endl;
 	ss << "v 1 A" << endl;
 	ss << "v 2 C" << endl;
+	ss << "% Esto es solo un comentario, tiene que ignorarlo" << endl;
 	ss << "e 2 1 b" << endl;
 
 	//Se llena el grafo con la información que contenga el flujo.

@@ -7,30 +7,57 @@
 #include "Matcheador.h"
 
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <memory>
 #include <utility>
 #include <string>
+#include <cctype>
+#include <cstring>
 #include <chrono>
 #include <algorithm>
 
 using namespace std;
 using namespace chrono;
 
+const int parametrosMinimos = 4;
+
 int main(int argc, char** argv)
 {
-	if (argc < 4)
+	if (argc < parametrosMinimos)
 	{
 		cerr << "Numero de parametros invalido, minimamente tiene que tener:" << endl;
-		cerr << "DireccionGrafoMuestra.g DireccionGrafoBusqueda.g ArchivoSalida" << endl;
+		cerr << "1) Direccion del grafo de muestra." << endl;
+		cerr << "2) Direccion del grafo de busqueda." << endl;
+		cerr << "3) Direccion del archivo de salida." << endl;
+		cerr << "4) Soporte (opcional, numero entero)." << endl;
+
+		cerr << endl << "----Ejemplo----" << endl;
+		cerr << "Sistemas LINUX-like:" << endl;
+		cerr << "./GraphMatchingThesis GrafoMuestra.g GrafoBusqueda.g Resultados.log 8" << endl;
+		cerr << "Sistemas WINDOWS:" << endl;
+		cerr << "GraphMatchingThesis.exe GrafoMuestra.g GrafoBusqueda.g Resultados.log 8" << endl;
+		
 		return 1;
+	}
+
+	int soporte = 1;
+
+	if (argc > parametrosMinimos)
+	{
+		stringstream ss(argv[parametrosMinimos]);
+		ss >> soporte;
+		if (ss.fail() || soporte <= 0)
+		{
+			cerr << "El soporte tiene que ser un numero entero positivo mayor a 0." << endl;
+			return 1;
+		}
 	}
 
 	ifstream flujoGrafoMuestra(argv[1]);
 	ifstream flujoGrafoBusqueda(argv[2]);
 	ofstream flujoSalida(argv[3]);
 
-	int soporte = 1;
 
 	Grafo grafoMuestra;
 	Grafo grafoBusqueda(1);
@@ -63,7 +90,7 @@ int main(int argc, char** argv)
 	flujoSalida << "Se han encontrado " << patrones.size() << " patrones con soporte " << soporte << endl << endl;
 	for (int i = 0, tam = patrones.size(); i < tam; i++)
 	{
-		flujoSalida << "  ( " << i + 1 << " ) " << endl;
+		flujoSalida << "  ( " << i + 1 << " ) " << "de tamano: " << patrones[i]->ArcosGrafoBusqueda.size() << endl;
 		for (auto arco : patrones[i]->ArcosGrafoBusqueda)
 		{
 			flujoSalida << "------" << *arco << endl;

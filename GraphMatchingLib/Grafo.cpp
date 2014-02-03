@@ -97,7 +97,7 @@ void Grafo::CreaFormaCanonica()
 	else
 		//Calculamos la forma canónica derivada.
 		CalculaFormaCanonicaDerivada();
-	//Al terminar éste método al menos se ha calculado ya la forma canónica.
+	//Al terminar éste método al menos se ha calculado una forma canónica.
 	_calculadaFormaCanonica = true;
 }
 
@@ -112,7 +112,7 @@ void Grafo::CalculaFormaCanonica()
 		_arcos[i]->SetEstado(EstadoArco::ESPERA);
 	}
 
-	//Con ésta función ordenaremos tanto _arcos.
+	//Con ésta función ordenaremos _arcos.
 	ComparadorPunterosArcos funcionComparadora = [](const std::shared_ptr<Arco>& a1, const std::shared_ptr<Arco>& a2)
 	{
 		return *a1 < *a2;
@@ -185,6 +185,7 @@ void Grafo::CalculaFormaCanonicaDerivada()
 	//posición de la forma canónica anterior como nuestra raiz nueva.
 	if (canonica.size() == 0)
 	{
+		_arcos[1]->SetEstado(EstadoArco::VISITADO);
 		canonica.push_back(_arcos[1]);
 	}
 
@@ -231,17 +232,23 @@ void Grafo::AgregarSucesores(ColaPriorizadaArcos& cola, const std::deque<std::sh
 
 std::istream& operator >>(std::istream& entrada, Grafo& g)
 {
-	//Podemos leer 2 posibles opciones:
+	//Podemos leer 3 posibles opciones:
+	// % --- Comentario. Sólo ignoramos toda la siguiente linea.
 	// v --- Crea un vértice, se espera leer: "enumeración, NombreVertice"
-	// e --- Crea un arco, se espera leer: "numeroVertice1, numeroVertice2, NombreArco"
+	// u --- Crea un arco no dirigido, se espera leer: "numeroVertice1, numeroVertice2, NombreArco"
 	char opcion;
 	//Leemos el nombre del arco
 	getline(entrada, g._nombre);
 	//Mientras tengamos datos que leer...
 	while (entrada >> opcion)
 	{
+		if (opcion == '%')
+		{
+			std::string comentario;
+			std::getline(entrada, comentario);
+		}
 		//Si la opcion leída es V
-		if (opcion == 'v')
+		else if (opcion == 'v')
 		{
 			//Leemos el nombre (como cadena completa, con espacios)
 			//Leemos la enumeración.

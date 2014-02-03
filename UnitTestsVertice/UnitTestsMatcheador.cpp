@@ -127,30 +127,3 @@ TEST_F(testMatcheador, testCreaNuevasRaicesGrafoMismosLVEV)
 
 	EXPECT_EQ(tamanoPatrones, patrones.size());
 }
-
-TEST_F(testMatcheador, testMatcheaGrafosPequenoSoporte01)
-{
-	ifstream fgm("C:\\Grafos\\g16.g");
-	ifstream fgb("C:\\Grafos\\g16.g");
-
-	ofstream log("C:\\Grafos\\g16.log");
-
-	fgm >> *grafoMuestra;
-	fgb >> *grafoBusqueda;
-
-	grafoMuestra->ExploraGrafo();
-	grafoBusqueda->ExploraGrafo();
-
-	MatcheadorPublico mp(*grafoMuestra, *grafoBusqueda);
-	mp.CambiaFlujo(&log);
-
-	mp.MatcheaGrafos();
-
-	const int soporte = 15;
-	auto patronesSoporte1 = mp.GetPatrones(soporte);
-	cout << endl << endl << "Se encontraron " << patronesSoporte1.size() << " patrones" << endl << endl;
-	for (int i = 0, tam = patronesSoporte1.size(); i < tam; i++)
-	{
-		cout << "Para el patron " << i << " tiene tamano: " << patronesSoporte1[i]->ArcosGrafoMuestra.size() << endl;
-	}
-}

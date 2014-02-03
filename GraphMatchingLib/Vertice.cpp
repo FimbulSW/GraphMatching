@@ -42,5 +42,7 @@ std::ostream& operator <<(std::ostream& salida, const Vertice& v)
 
 bool Vertice::operator <(const Vertice& v) const
 {
+	if (_etiqueta->_etiqueta == v._etiqueta->_etiqueta)
+		return _enumeracion < v._enumeracion;
 	return _etiqueta->_etiqueta < v._etiqueta->_etiqueta;
 }
