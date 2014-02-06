@@ -55,6 +55,11 @@ int Arco::GetFrecuencia() const
 	return _lvev->GetFrecuencia();
 }
 
+const std::string& Arco::GetEtiqueta() const
+{
+	return _etiqueta->_etiqueta;
+}
+
 const std::string& Arco::GetLVEVString() const
 {
 	return _lvev->GetLVEVString();

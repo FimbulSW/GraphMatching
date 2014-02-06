@@ -50,6 +50,9 @@ public:
 	//Nos regresa la frecuencia del arco.
 	int GetFrecuencia() const;
 
+	//Nos regresa la etiqueta del arco. No confundir con LVEV.
+	const std::string& GetEtiqueta() const;
+
 	//Nos regresa el LVEV en forma de cadena.
 	const std::string& GetLVEVString() const;
 

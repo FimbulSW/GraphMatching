@@ -1,0 +1,7 @@
+Ficheros modificados:
+
+Matcheador.cpp
+Matcheador.h
+Arco.cpp
+Arco.h
+GraphMatchingThesis.cpp - (main.cpp)

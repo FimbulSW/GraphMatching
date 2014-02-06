@@ -12,6 +12,9 @@ struct Patron
 	// Bandera para saber si el patrón puede seguirse expandiendo o no.
 	bool Expandible;
 
+	//Número de iteración en que fue creado.
+	int Iteracion;
+
 	// Lista de arcos del grafo de muestra.
 	std::deque<std::shared_ptr<Arco> > ArcosGrafoMuestra;
 
@@ -22,7 +25,7 @@ struct Patron
 	void AgregarArcos(std::shared_ptr<Arco>&, std::shared_ptr<Arco>&);
 
 	// Constructor por default, pone el valor de Expandible a true.
-	Patron();
+	Patron(int = 1);
 
 	// Constructor copia, crea un patrón idéntico.
 	Patron(Patron&);
@@ -59,7 +62,7 @@ protected:
 
 	// Se busca todos aquellos arcos que se encuentran en el grafo de búsqueda y si alguno concuerda
 	// con la raiz entonces se crea un nuevo patrón.
-	void ObtenerRaices(std::shared_ptr<Arco>&);
+	void ObtenerRaices(std::shared_ptr<Arco>&, int = 1);
 
 	// Método para encontrar arcos en el grafo de búsqueda con respecto al grafo de muéstra.
 	void ExpandirPatrones();
