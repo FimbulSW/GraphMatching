@@ -145,6 +145,10 @@ int main(int argc, char** argv)
 	);*/
 
 	// Empezamos a mostrar el reporte.
+	
+	flujoSalida << "Grafo de muestra: " << argv[1] << endl;
+	flujoSalida << "Grafo de busqueda: " << argv[2] << endl;
+
 	flujoSalida << "Se han encontrado " << patrones.size() << " patrones con tamanio " << tamanio << endl << endl;
 	for (int i = 0, tam = patrones.size(); i < tam; i++)
 	{
