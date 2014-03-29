@@ -32,6 +32,8 @@ Matcheador::~Matcheador()
 bool Matcheador::EsCandidato(std::shared_ptr<Patron>& patron, 
 							 const std::shared_ptr<Arco>& arcoMuestra, const std::shared_ptr<Arco>& arcoBusqueda)
 {
+	//Verifica si el candidato es adyacente al menos a un arco del patrón.
+	bool esAdyacente = false;
 	//Exploramos todos los arcos en nuestro patrón.
 	for (int i = 0, l = patron->ArcosGrafoMuestra.size(); i < l; i++)
 	{
@@ -45,9 +47,13 @@ bool Matcheador::EsCandidato(std::shared_ptr<Patron>& patron,
 		// Si es adyacente en uno tiene que serlo para el otro y viceversa, por lo que si sus valores son
 		// distintos entonces no pueden ser candidatos.
 		if (esMuestraAdyacente != esBusquedaAdyacente) return false;
+
+		// Si no hay problema de consistencia y es adyacente en alguna parte del patrón entonces
+		//
+		if (esMuestraAdyacente == true) esAdyacente = true;
 	}
 	//Si termina la iteración quiere decir que ha pasado los filtros, por lo que sí es un candidato.
-	return true;
+	return esAdyacente;
 }
 
 std::deque<std::shared_ptr<Arco> > Matcheador::FiltraCandidatos(std::shared_ptr<Patron>& patron, std::shared_ptr<Arco>& arcoMuestra, const std::deque<std::shared_ptr<Arco> >& arcosSimilares)
